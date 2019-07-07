@@ -1,0 +1,27 @@
+:root {
+--base-color: #0A2F51;
+--base-light: #0E4D64;
+--med-accent: #39A96B;
+--hi-accent: #DEEDCF;
+--full-height: 100vh;
+--header-height: 25px;
+}
+
+.bookmarksContentBody{
+     display: grid;
+    grid-template-columns: 230px auto; 
+}
+
+aside{
+    background: var(--base-color);
+    height: var(--full-height);
+    padding: 15px;
+}
+
+main{
+    height: var(--full-height);
+}
+
+header{
+    height: var(--header-height);
+}
