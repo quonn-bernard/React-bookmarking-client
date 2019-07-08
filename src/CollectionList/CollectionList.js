@@ -13,7 +13,7 @@ class CollectionList extends Component {
             collections = []
         } = this.context
         return (
-            <div>
+            <div class="collection">
                 <Link to="/AddCollection" style={{color: "white"}}>Add Collection</Link>
                 {collections.map(collection => {
                     return <div key={collection.id} className="collectionLink">

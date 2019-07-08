@@ -5,13 +5,14 @@
     --hi-accent: #DEEDCF;
     --full-height: 100vh;
     --header-height: 75px;
+    --collection-color: red;
     }
 
     .collectionLink{
         margin: 0 0 7px;
     }
 .collectionLink > a{
-    background: var(--base-light);
+    background: var(--collection-color);
     color: var(--hi-accent);
     text-decoration: none;
     padding: 0 3px;

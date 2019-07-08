@@ -1,28 +1,42 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import BookmarkDesc from "./BookmarkDesc/BookmarkDesc";
 import BookmarkList from "./BookmarkList/BookmarkList";
-import {Link} from 'react-router-dom';
-import {Route} from 'react-router-dom';
-import {withRouter} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import AddCollection from './AddCollection/AddCollection';
 import AddBookmark from './AddBookmark/AddBookmark';
 import CollectionList from "./CollectionList/CollectionList";
 import MyContext from "./MyContext/MyContext"
 import config from "./config";
+import NavBar from './NavBar/NavBar';
+import MblNav from './MblNav/MblNav';
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
             collections: [],
-            bookmarks: []
+            bookmarks: [],
+            hamburgerOpen: false
         }
     }
-    
+
+    swapOpen = () => {
+        this.setState({
+            hamburgerOpen: !this.state.hamburgerOpen
+        });
+    }
+
+    closeHamburger = () => {
+        this.setState({
+            hamburgerOpen: false
+        })
+    }
 
     handleDeleteBookmark = (data) => {
-        const {bookmarkId} = data
+        const { bookmarkId } = data
         this.setState({
             bookmarks: this
                 .state
@@ -57,9 +71,9 @@ class App extends Component {
             fetch(`${config.API_ENDPOINT}/bookmarks`),
             fetch(`${config.API_ENDPOINT}/collections`)
         ]).then(([bookmarksRes, collectionsRes]) => {
-            if (!bookmarksRes.ok) 
+            if (!bookmarksRes.ok)
                 return bookmarksRes.json().then(e => Promise.reject(e))
-            if (!collectionsRes.ok) 
+            if (!collectionsRes.ok)
                 return collectionsRes.json().then(e => Promise.reject(e))
 
             return Promise.all([
@@ -67,9 +81,9 @@ class App extends Component {
                 collectionsRes.json()
             ])
         }).then(([bookmarks, collections]) => {
-            this.setState({bookmarks, collections})
+            this.setState({ bookmarks, collections })
         }).catch(error => {
-            console.error({error})
+            console.error({ error })
         })
     }
 
@@ -77,7 +91,7 @@ class App extends Component {
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
-            deleteBookmark: bookmarkId => this.handleDeleteBookmark({bookmarkId}),
+            deleteBookmark: bookmarkId => this.handleDeleteBookmark({ bookmarkId }),
             AddCollection: (e) => this.handleAddCollection(e),
             AddBookmark: (e) => this.handleAddBookmark(e),
             goBack: () => this.handleBackButton()
@@ -86,22 +100,24 @@ class App extends Component {
         return (
             <MyContext.Provider value={value}>
                 <div className="App">
+                    <NavBar swapOpen={this.swapOpen}></NavBar>
+                    <MblNav open={this.state.hamburgerOpen}></MblNav>
                     <section className="bookmarksContentBody">
                         <aside>
                             <nav>
-                                <Route exact path='/' component={CollectionList}/>
-                                <Route exact path='/collection/:collectionId' component={CollectionList}/> {/* Collections Path */}
+                                <Route exact path='/' component={CollectionList} />
+                                <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
                             </nav>
                         </aside>
-                        <main>
+                        <main onClick={this.closeHamburger}>
                             <header>
-                                {< Link to = "/" > <h1>Bookmarkful</h1> </Link>}
+                                {< Link to="/" > <h1>Bookmarkful</h1> </Link>}
                             </header>
-                            <Route exact path='/' component={BookmarkList}/>
-                            <Route exact path='/collection/:collectionId' component={BookmarkList}/> {/* Bookmarks Path */}
-                            <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc}/> {/* Bookmark Path */}
-                            <Route exact path='/AddCollection' component={AddCollection}/> {/*Add Collection Form Path*/}
-                            <Route exact path='/AddBookmark' component={AddBookmark}/>{/* Add Bookmark Form Path */}
+                            <Route exact path='/' component={BookmarkList} />
+                            <Route exact path='/collection/:collectionId' component={BookmarkList} /> {/* Bookmarks Path */}
+                            <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> {/* Bookmark Path */}
+                            <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
+                            <Route exact path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
                         </main>
                     </section>
                 </div>
