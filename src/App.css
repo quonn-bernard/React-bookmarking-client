@@ -54,6 +54,19 @@
   grid-template-columns: 230px auto;
 }
 
+.bookmarksContentBody > main > div > a{
+  position: absolute;
+    right: 45px;
+    top: 100px;
+    background: green;
+    padding: 10px;
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    color: white;
+    text-align: center;
+}
+
 aside {
   background: #1483ea;
   height: var(--full-height);

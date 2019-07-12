@@ -105,19 +105,18 @@ class App extends Component {
                     <section className="bookmarksContentBody">
                         <aside>
                             <nav>
-
+                            <h5><Link to='/'>All Collections</Link></h5>
+                            <h5><Link to='/AddCollection'>Add Collection</Link></h5>
                             </nav>
                         </aside>
                         <main onClick={this.closeHamburger}>
-                            <header>
-                                {< Link to="/" > <h1>Bookmarkful</h1> </Link>}
-                            </header>
                             <Route exact path='/' component={CollectionList} />
-                            <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
+                            {/* <Route exact path='/collection/:collectionId' component={CollectionList} /> Collections Path */}
                             {/* <Route exact path='/' component={BookmarkList} /> */}
-                            <Route exact path='/collection/:collectionId' component={BookmarkList} /> {/* Bookmarks Path */}
-                            <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> {/* Bookmark Path */}
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
+                            <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} collections={this.state.collections} />}/>
+                            {/* <Route exact path='/collection/:collectionId' component={BookmarkList} /> Bookmarks Path */}
+                            <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> {/* Bookmark Path */}
                             <Route exact path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
                         </main>
                     </section>

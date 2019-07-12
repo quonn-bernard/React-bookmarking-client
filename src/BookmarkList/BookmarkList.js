@@ -22,6 +22,8 @@ class BookmarkList extends Component {
 
     render() {
         const { collectionId } = this.props.match.params
+        const collection = this.props.collections.filter(collection => collection.id === collectionId)
+        const collectionName = collection[0].name
         const {
             bookmarks = []
         } = this.context
@@ -32,11 +34,12 @@ class BookmarkList extends Component {
 
         return (
             <div>
-                <Link to="/AddBookmark">Add Bookmark</Link>
+                <Link to="/AddBookmark">+ Bookmark</Link>
                 <ul>
+                <h2>{collectionName} Collection</h2>
                     {bookmarksForCollection.map(bookmark => {
-                    // console.log(bookmark)
                    return <li key={bookmark.id}>
+                       
                         <Bookmark
                             id={bookmark.id}
                             name={bookmark.name}

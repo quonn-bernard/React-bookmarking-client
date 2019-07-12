@@ -1,19 +1,43 @@
 :root {
-    --base-color: #0A2F51;
-    --base-light: #0E4D64;
-    --med-accent: #39A96B;
-    --hi-accent: #DEEDCF;
-    --full-height: 100vh;
-    --header-height: 75px;
-    --collection-color: red;
-    }
+  --base-color: #0a2f51;
+  --base-light: #0e4d64;
+  --med-accent: #39a96b;
+  --hi-accent: #deedcf;
+  --full-height: 100vh;
+  --header-height: 75px;
+  --collection-color: red;
+}
 
-    .collectionLink{
-        margin: 0 0 7px;
-    }
-.collectionLink > a{
-    background: var(--collection-color);
-    color: var(--hi-accent);
-    text-decoration: none;
-    padding: 0 3px;
+.collectionLink {
+  margin: 0 0 7px;
+  position: relative;
+}
+
+.collections {
+  padding: 30px 45px;
+}
+
+.collections > h2 {
+  margin-left: -15px;
+}
+
+.collectionLink > a {
+  text-decoration: none;
+  padding: 0 3px;
+  margin-bottom: 30px;
+}
+
+.collectionLink > a > div {
+  margin-bottom: -50px;
+  margin-left: -15px;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+
+.folder {
+  color: lightgrey;
+  z-index: 100;
 }

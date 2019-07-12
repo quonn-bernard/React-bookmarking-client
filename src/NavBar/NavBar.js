@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class NavBar extends React.Component {
 
@@ -6,7 +7,7 @@ class NavBar extends React.Component {
         return (
             <nav className="nav-grid">
                 <div>
-                    <h1>V-MARKER</h1>
+                    <Link to='/'><h1>V-MARKER</h1></Link>
                 </div>
                 <div className="nav-menu-grid">
                     <div className="acct-btn"><h5>AP</h5></div>
