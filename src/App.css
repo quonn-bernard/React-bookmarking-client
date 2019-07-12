@@ -1,27 +1,98 @@
 :root {
---base-color: #0A2F51;
---base-light: #0E4D64;
---med-accent: #39A96B;
---hi-accent: #DEEDCF;
---full-height: 100vh;
---header-height: 25px;
+  --base-color: #1483ea;
+  --base-light: #1483ea;
+  --med-accent: #39a96b;
+  --hi-accent: #deedcf;
+  --dark-turq: #20c8c9;
+  --light-turq: #22d5d6;
+  --turq: #38dedf;
+  --dark-slate-grey: #383f43;
+  --full-height: 100vh;
+  --header-height: 25px;
 }
 
-.bookmarksContentBody{
-     display: grid;
-    grid-template-columns: 230px auto; 
+.nav-grid {
+  display: grid;
+  grid-template-columns: 75% auto;
+  min-width: 320px;
 }
 
-aside{
-    background: var(--base-color);
-    height: var(--full-height);
-    padding: 15px;
+.nav-grid > div {
+  border: 1px solid black;
+}
+.nav-grid > div > ul {
+  list-style: none;
+  display: none;
 }
 
-main{
-    height: var(--full-height);
+.nav-grid > div > ul > li {
+  display: inline-block;
 }
 
-header{
-    height: var(--header-height);
+.nav-menu-grid{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.hamburger-icon > div {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+  display: block;
+}
+
+#mbl-nav {
+  height: 100%;
+  position: absolute;
+  background: teal;
+  width: 235px;
+}
+
+.bookmarksContentBody {
+  display: grid;
+  grid-template-columns: 230px auto;
+}
+
+aside {
+  background: #1483ea;
+  height: var(--full-height);
+  padding: 15px;
+}
+
+main {
+  height: var(--full-height);
+}
+
+header {
+  height: var(--header-height);
+}
+
+/* classes */
+.ease-close {
+  left: -242px;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition-timing-function: ease-out;
+}
+.ease-open {
+  left: 0;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  transition-timing-function: ease-in;
+}
+.nav-menu-grid > .nav-plus-btn > h5,.nav-menu-grid > .acct-btn > h5{
+    display: none;
+}
+#mbl-nav > .nav-plus-btn > h5, #mbl-nav > .acct-btn > h5{
+    display: inline-block;
+}
+/* Media Queries */
+@media only screen and (min-width: 600px) {
+    .nav-menu-grid > .nav-plus-btn > h5,.nav-menu-grid > .acct-btn > h5{
+        display: block;
+    }
+    #mbl-nav > .nav-plus-btn > h5, #mbl-nav > .acct-btn > h5{
+        display: none;
+    }
 }
