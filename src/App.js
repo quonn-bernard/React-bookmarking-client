@@ -105,15 +105,16 @@ class App extends Component {
                     <section className="bookmarksContentBody">
                         <aside>
                             <nav>
-                                <Route exact path='/' component={CollectionList} />
-                                <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
+
                             </nav>
                         </aside>
                         <main onClick={this.closeHamburger}>
                             <header>
                                 {< Link to="/" > <h1>Bookmarkful</h1> </Link>}
                             </header>
-                            <Route exact path='/' component={BookmarkList} />
+                            <Route exact path='/' component={CollectionList} />
+                            <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
+                            {/* <Route exact path='/' component={BookmarkList} /> */}
                             <Route exact path='/collection/:collectionId' component={BookmarkList} /> {/* Bookmarks Path */}
                             <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> {/* Bookmark Path */}
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
