@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AddBookmarkForm from "../AddBookmarkForm/AddBookmarkForm";
+import AddBookmarkForm from "../../Components/AddBookmarkForm/AddBookmarkForm";
 
 class AddBookmark extends Component {
 

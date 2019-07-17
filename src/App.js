@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import './App.css';
-import BookmarkDesc from "./BookmarkDesc/BookmarkDesc";
-import BookmarkList from "./BookmarkList/BookmarkList";
-import { Link } from 'react-router-dom';
-import { Route } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import AddCollection from './AddCollection/AddCollection';
-import AddBookmark from './AddBookmark/AddBookmark';
-import CollectionList from "./CollectionList/CollectionList";
+import { Link, Route, withRouter } from 'react-router-dom';
+import NavBar from './Components/NavBar/NavBar';
+import MblNav from './Components/MblNav/MblNav';
+import BookmarkDesc from "./routes/BookmarkDesc";
+import CollectionList from "./routes/CollectionList";
+import BookmarkList from "./routes/BookmarkList/BookmarkList";
+import AddCollection from './routes/AddCollection/AddCollection';
+import AddBookmark from './routes/AddBookmark/AddBookmark';
 import MyContext from "./MyContext/MyContext"
 import config from "./config";
-import NavBar from './NavBar/NavBar';
-import MblNav from './MblNav/MblNav';
+import './App.css';
 
 class App extends Component {
     constructor(props) {
@@ -112,10 +110,8 @@ class App extends Component {
                         <main onClick={this.closeHamburger}>
                             <Route exact path='/' component={CollectionList} />
                             <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
-
                             <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={this.state.bookmarks} />} />
                             <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={this.state.bookmarks} />} />
-                            {/* <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> Bookmark Path */}
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
                             <Route path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
                         </main>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import config from "../config";
-import MyContext from "../MyContext/MyContext";
+import config from "../../config";
+import MyContext from "../../MyContext/MyContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
