@@ -8,7 +8,8 @@ class BookmarkList extends Component {
     static defaultProps = {
         match: {
             params: {}
-        }
+        },
+        bookmarks: []
     }
 
     static contextType = MyContext;
@@ -22,31 +23,34 @@ class BookmarkList extends Component {
 
     render() {
         const { collectionId } = this.props.match.params
-        const {
-            bookmarks = []
-        } = this.context
+        const { bookmarks = [] } = this.context
 
-        const bookmarksForCollection = ((!collectionId)
-            ? bookmarks
-            : bookmarks.filter(bookmark => bookmark.collectionId === collectionId))
+        let bookmarksForCollection = [];
 
+        if(this.props.bookmarks.length){
+            bookmarksForCollection = this.props.bookmarks.map(bookmark => {
+                if(bookmark.collection_id === parseInt(collectionId))
+                return <li key={bookmark.id}>
+                    <Bookmark
+                        id={bookmark.id}
+                        name={bookmark.name}
+                        content={bookmark.content}
+                        date={bookmark.modified}
+                        onDelete={this.handleDeleteBookmark}
+                        collection_id={bookmark.collection_id}
+                    >
+                    </Bookmark>
+                </li>
+            })
+        }else {
+            bookmarksForCollection = 'no bookmarks yet...'
+        }
+
+         
         return (
             <div>
-                <Link to="/AddBookmark">Add Bookmark</Link>
                 <ul>
-                    {bookmarksForCollection.map(bookmark => {
-                    // console.log(bookmark)
-                   return <li key={bookmark.id}>
-                        <Bookmark
-                            id={bookmark.id}
-                            name={bookmark.name}
-                            content={bookmark.content}
-                            date={bookmark.modified}
-                            onDelete={this.handleDeleteBookmark}
-                            collection_id={bookmark.collection_id}
-                            >
-                            </Bookmark>
-                    </li>})}
+                    {bookmarksForCollection}   
                 </ul>
             </div>
         )

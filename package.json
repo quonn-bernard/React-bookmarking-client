@@ -9,7 +9,9 @@
     "react-id-generator": "^0.1.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "uuid": "^3.3.2"
+    "url-to-screenshot": "^3.0.0",
+    "uuid": "^3.3.2",
+    "webshot": "^0.18.0"
   },
   "scripts": {
     "start": "react-scripts start",

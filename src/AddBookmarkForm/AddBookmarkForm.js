@@ -3,18 +3,20 @@ import config from "../config";
 import MyContext from "../MyContext/MyContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-const uuidv4 = require('uuid/v4');
 
-class AddCollectionForm extends Component {
+class AddBookmarkForm extends Component {
     constructor(props) {
         super(props)
         this.nameInput = React.createRef();
         this.bookmarkContent = React.createRef();
         this.collectionName = React.createRef();
+        this.type = React.createRef();
+
         this.state = {
             bookmarkName: this.nameInput,
             bookmarkContent: this.bookmarkContent,
-            collectionName: this.collectionName
+            collectionName: this.collectionName,
+            type: this.bookmarkType
         }
     }
 
@@ -76,36 +78,51 @@ class AddCollectionForm extends Component {
             bookmarkName: input,
         });
     }
+
     updateContent(input) {
         this.setState({
             bookmarkContent: input,
         });
     }
+
     updateCollection(input) {
         this.setState({
             collectionName: input
         });
     }
 
+    updateType(input) {
+        this.setState({
+            type: input
+        });
+    }
+
     handleSubmit(event) {
         event.preventDefault();
+
         let collection = this.context.collections.filter(collection => {
+        
             return collection.name === this.state.collectionName
         })
 
+        console.log(collection[0])
+
         const bookmarkModified = new Date();
         const newBookmark = {
-            id: uuidv4(),
+            // id: uuidv4(),
             name: this.state.bookmarkName,
             modified: bookmarkModified.toISOString(),
-            collectionId: collection[0].id,
+            collection_id: collection[0].id,
             content: this.state.bookmarkContent,
-        };
+            type: this.state.type
+        }
+
+        console.log(newBookmark)
         this.AddBookmark(newBookmark);
     }
 
     render() {
-
+ 
         return (
             <form onSubmit={e => this.handleSubmit(e)}>
                 <label htmlFor="bookmarkName">BookmarkName</label>
@@ -119,6 +136,12 @@ class AddCollectionForm extends Component {
                         <option key={collection.id} value={collection.name}>{collection.name}</option>
                     )}
                 </select>
+                <label htmlFor="type">Bookmark Type</label>
+                <select onChange={e => this.updateType(e.target.value)}>
+                <option value='link'>Link</option>
+                <option value='image'>Image</option>
+                <option value='text'>Text</option>
+                </select>
                 <button>Add Bookmark</button>
                 <Link to="/"><button>Back</button></Link>
             </form>
@@ -126,4 +149,8 @@ class AddCollectionForm extends Component {
     }
 }
 
-export default withRouter(AddCollectionForm);
+AddBookmarkForm.defaultProps = {
+    collectionName: 'Movies'
+  };
+
+export default withRouter(AddBookmarkForm);

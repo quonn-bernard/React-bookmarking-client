@@ -105,20 +105,19 @@ class App extends Component {
                     <section className="bookmarksContentBody">
                         <aside>
                             <nav>
-
+                                {< Link to="/AddCollection" > <h4>Add Collection</h4> </Link>}
+                                {< Link to="/AddBookmark" > <h4>Add Bookmark</h4> </Link>}
                             </nav>
                         </aside>
                         <main onClick={this.closeHamburger}>
-                            <header>
-                                {< Link to="/" > <h1>Bookmarkful</h1> </Link>}
-                            </header>
                             <Route exact path='/' component={CollectionList} />
                             <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
-                            {/* <Route exact path='/' component={BookmarkList} /> */}
-                            <Route exact path='/collection/:collectionId' component={BookmarkList} /> {/* Bookmarks Path */}
-                            <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> {/* Bookmark Path */}
+
+                            <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={this.state.bookmarks} />} />
+                            <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={this.state.bookmarks} />} />
+                            {/* <Route exact path='/bookmark/:bookmarkId' component={BookmarkDesc} /> Bookmark Path */}
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
-                            <Route exact path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
+                            <Route path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
                         </main>
                     </section>
                 </div>
