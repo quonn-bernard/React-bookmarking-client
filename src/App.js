@@ -4,11 +4,12 @@ import NavBar from './Components/NavBar/NavBar';
 import MblNav from './Components/MblNav/MblNav';
 import BookmarkDesc from "./routes/BookmarkDesc";
 import CollectionList from "./routes/CollectionList";
+import CollectionAPI from './services/collection-api-service';
+import BookmarkAPI from './services/bookmark-api-service';
 import BookmarkList from "./routes/BookmarkList/BookmarkList";
 import AddCollection from './routes/AddCollection/AddCollection';
 import AddBookmark from './routes/AddBookmark/AddBookmark';
 import MyContext from "./MyContext/MyContext"
-import config from "./config";
 import './App.css';
 
 class App extends Component {
@@ -65,24 +66,15 @@ class App extends Component {
     }
 
     componentDidMount() {
-        Promise.all([
-            fetch(`${config.API_ENDPOINT}/bookmarks`),
-            fetch(`${config.API_ENDPOINT}/collections`)
-        ]).then(([bookmarksRes, collectionsRes]) => {
-            if (!bookmarksRes.ok)
-                return bookmarksRes.json().then(e => Promise.reject(e))
-            if (!collectionsRes.ok)
-                return collectionsRes.json().then(e => Promise.reject(e))
 
-            return Promise.all([
-                bookmarksRes.json(),
-                collectionsRes.json()
-            ])
-        }).then(([bookmarks, collections]) => {
-            this.setState({ bookmarks, collections })
-        }).catch(error => {
-            console.error({ error })
+        CollectionAPI.getCollections().then(([...collections]) => {
+            this.setState({collections: [...collections] })
         })
+
+        BookmarkAPI.getBookmarks().then(([...bookmarks]) => {
+            this.setState({bookmarks: [...bookmarks] })
+        })
+
     }
 
     render() {
