@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ValidationError from "../ValidationError/ValidationError";
-import config from "../config";
-import MyContext from "../MyContext/MyContext";
+import ValidationError from "../../Components/ValidationError/ValidationError";
+import config from "../../config";
+import MyContext from "../../MyContext/MyContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 

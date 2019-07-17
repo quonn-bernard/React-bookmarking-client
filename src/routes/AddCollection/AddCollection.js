@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AddCollectionForm from "../AddCollectionForm/AddCollectionForm";
+import AddCollectionForm from "../../Components/AddCollectionForm/AddCollectionForm";
 
 class AddCollection extends Component {
 

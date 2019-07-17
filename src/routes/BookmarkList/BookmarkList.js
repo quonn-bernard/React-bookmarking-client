@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Bookmark from "../Bookmark/Bookmark";
-import MyContext from "../MyContext/MyContext"
+import Bookmark from "../../Bookmark/Bookmark";
+import MyContext from "../../MyContext/MyContext"
 import { withRouter } from "react-router-dom";
 
 class BookmarkList extends Component {
