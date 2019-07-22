@@ -18,13 +18,13 @@ The server is also in written JavaScript (source at [https://github.com/quonn-be
 
 ## Code base
 
-The source folder has three sub-folders, "Components," "routes," and "services."
+The source folder has four sub-folders, "appContext", "Components", "routes" and "services". 
 
-The routes folder contains React components for the distinct pages of our app, namely Landing, Login, Main, Project, and Registration.
+The routes folder contains React components for the distinct pages of the app, namely AddBookmark, AddCollection, BookmarkList, BookmarkDesc, Login, and Registration.
 
 The components folder contains all other React sub-components needed for the various pages.
 
-The services folder contains the files needed for communicating with the backend.
+The services folder contains the files needed for communicating with the REST API.
 
 ## Installation for Development
 
