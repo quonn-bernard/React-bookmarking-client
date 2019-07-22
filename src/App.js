@@ -8,9 +8,13 @@ import CollectionAPI from './services/collection-api-service';
 import BookmarkAPI from './services/bookmark-api-service';
 import BookmarkList from "./routes/BookmarkList/BookmarkList";
 import AddCollection from './routes/AddCollection/AddCollection';
+import Registration from './routes/Registration/Registration';
+import Login from './routes/Login/Login';
 import AddBookmark from './routes/AddBookmark/AddBookmark';
 import MyContext from "./MyContext/MyContext"
 import './App.css';
+
+import RegistrationForm from './Components/RegistrationForm/RegistrationForm';
 
 class App extends Component {
     constructor(props) {
@@ -106,6 +110,8 @@ class App extends Component {
                             <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={this.state.bookmarks} />} />
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
                             <Route path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
+                            <Route path='/Register' component={Registration} />{/* Adds new users to database */}
+                            <Route path='/Login' component={Login} />{/* Authenticates Users */}
                         </main>
                     </section>
                 </div>

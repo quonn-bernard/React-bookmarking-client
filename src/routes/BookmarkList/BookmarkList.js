@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Bookmark from "../../Bookmark/Bookmark";
+import Bookmark from "../../Components/Bookmark/Bookmark";
 import MyContext from "../../MyContext/MyContext"
 import { withRouter } from "react-router-dom";
 

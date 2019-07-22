@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MyContext from "../MyContext/MyContext"
-import config from "../config";
+import MyContext from "../../MyContext/MyContext"
+import config from "../../config";
 import PropTypes from 'prop-types';
 
 class Bookmark extends Component {
