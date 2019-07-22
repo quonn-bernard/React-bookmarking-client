@@ -13,7 +13,7 @@ A bookmarking application that allows users to create clickable and/or downloada
 
 The client logic is coded with ES6 and ReactJS, and styled with CSS3.
 
-The server is also in written JavaScript (source at [https://github.com/quonn-bernard/Bookmarking-server]) and uses Express with PostgreSQL for the database.
+The server is also in written JavaScript (source at [https://github.com/quonn-bernard/Bookmarks-server]) and uses Express with PostgreSQL for the database.
 
 
 ## Code base
