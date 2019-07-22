@@ -28,5 +28,5 @@ The services folder contains the files needed for communicating with the REST AP
 
 ## Installation for Development
 
-Clone the repo and run "npm install". Then "npm start" will start the local development server. Instructions for installing the server and database, along with API documentation, can be found at the [repo for the server.](https://github.com/quonn-bernard/Bookmarking-server)
+Clone the repo and run "npm install". Then "npm start" will start the local development server. Instructions for installing the server and database, along with API documentation, can be found at the [repo for the server.](https://github.com/quonn-bernard/Bookmarks-server)
 
