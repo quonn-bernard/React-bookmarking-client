@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Bookmark from "../../Components/Bookmark/Bookmark";
-import MyContext from "../../MyContext/MyContext"
+import appContext from "../../appContext/appContext"
 import { withRouter } from "react-router-dom";
 
 class BookmarkList extends Component {
@@ -12,7 +12,7 @@ class BookmarkList extends Component {
         bookmarks: []
     }
 
-    static contextType = MyContext;
+    static contextType = appContext;
 
     handleDelete = bookmarkId => {
         this
@@ -25,6 +25,7 @@ class BookmarkList extends Component {
         const { collectionId } = this.props.match.params
         const { bookmarks = [] } = this.context
 
+        console.log(bookmarks)
         let bookmarksForCollection = [];
 
         if(this.props.bookmarks.length){

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import config from "../../config";
-import MyContext from "../../MyContext/MyContext";
+import appContext from "../../appContext/appContext";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ class AddBookmarkForm extends Component {
         }
     }
 
-    static contextType = MyContext;
+    static contextType = appContext;
 
     // formValid() {
     //     this.setState({ formValid: this.state.nameValid });

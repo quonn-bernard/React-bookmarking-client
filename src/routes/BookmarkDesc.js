@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyContext from "../MyContext/MyContext"
+import appContext from "../appContext/appContext"
 import config from "../config";
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ class BookmarkDesc extends Component {
 
     
     
-    static contextType = MyContext;
+    static contextType = appContext;
 
     
 
@@ -56,7 +56,7 @@ class BookmarkDesc extends Component {
             console.log(encodeURIComponent(myBookmark[0].content))   
              let url = `http://api.screenshotlayer.com/api/capture?access_key=61195edb33dea3bafaaebb353570c8e8&url=${encodeURIComponent(myBookmark[0].content)}`;
              console.log(url) 
-             let urlScreenshot = fetch(url,{mode: 'no-cors'}).then(function(response) {
+             let urlScreenshot = fetch(url).then(function(response) {
                 console.log(response); // "opaque"
               })
              return (
