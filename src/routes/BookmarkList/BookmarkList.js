@@ -25,7 +25,6 @@ class BookmarkList extends Component {
         const { collectionId } = this.props.match.params
         const { bookmarks = [] } = this.context
 
-        console.log(bookmarks)
         let bookmarksForCollection = [];
 
         if(this.props.bookmarks.length){
@@ -33,6 +32,7 @@ class BookmarkList extends Component {
                 if(bookmark.collection_id === parseInt(collectionId))
                 return <li key={bookmark.id}>
                     <Bookmark
+                        key={bookmark.id}
                         id={bookmark.id}
                         name={bookmark.name}
                         content={bookmark.content}

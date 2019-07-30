@@ -54,7 +54,7 @@ class Bookmark extends Component {
 
 Bookmark.propTypes = {
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   modified: PropTypes.string,
 };
 export default Bookmark;

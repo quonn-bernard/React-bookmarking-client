@@ -17,13 +17,13 @@ const AuthApiService = {
                     : res.json()
             
             )
-            // .then(res => {
-            //     TokenService.saveAuthToken(res.authToken)
-            //     TokenService.queueCallbackBeforeExpiry(() => {
-            //         AuthApiService.postRefreshToken()
-            //     })
-            //     return res
-            // })
+            .then(res => {
+                TokenService.saveAuthToken(res.authToken)
+                TokenService.queueCallbackBeforeExpiry(() => {
+                    AuthApiService.postRefreshToken()
+                })
+                return res
+            })
             .catch(err => {
                 console.log('refresh token request error')
                 console.error(err)

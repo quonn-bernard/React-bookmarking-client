@@ -87,7 +87,6 @@ class App extends Component {
    
     setUserProfile() {
         if (TokenService.hasAuthToken()) {
-            console.log('setting profile')
             ProfileApiService.getProfile()
                 .then(profile => {
                     this.setState({
@@ -98,7 +97,6 @@ class App extends Component {
     }
 
     render() {
-
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
@@ -116,21 +114,17 @@ class App extends Component {
                     <MblNav open={this.state.hamburgerOpen}></MblNav>
                     <section className="bookmarksContentBody">
                         <aside>
-
                             <AccountPanel profile={this.state.profile}></AccountPanel>
-
                             <nav>
                                 {< Link to="/AddCollection" > <h4>Add Collection</h4> </Link>}
                                 {< Link to="/AddBookmark" > <h4>Add Bookmark</h4> </Link>}
                             </nav>
                         </aside>
                         <main onClick={this.closeHamburger}>
-
                             {/* Renders CollectionList as soon as local storage gets authToken  */}
                             {(!TokenService.hasAuthToken())
                                 ? <Route exact path='/' component={Login} />
-                                : <Route exact path='/' render={(props) => <CollectionList {...props} collections={this.state.collections} />} />}
-
+                                : <Route exact path='/' render={(props) => <CollectionList {...props} profile={this.state.profile} collections={this.state.collections} />} />}
                             <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={this.state.bookmarks} />} />
                             <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={this.state.bookmarks} />} />
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}

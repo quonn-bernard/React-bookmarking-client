@@ -98,14 +98,14 @@ class AddBookmarkForm extends Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
-
+            event.preventDefault();
+        alert(this.context)
         let collection = this.context.collections.filter(collection => {
         
             return collection.name === this.state.collectionName
         })
 
-        console.log(collection[0])
+        console.log(collection)
 
         const bookmarkModified = new Date();
         const newBookmark = {
