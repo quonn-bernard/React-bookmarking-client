@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import { Link, Route, withRouter } from 'react-router-dom';
+import { Link, Route, Redirect, withRouter } from 'react-router-dom';
 import NavBar from './Components/NavBar/NavBar';
 import MblNav from './Components/MblNav/MblNav';
+import AccountPanel from './Components/AccountPanel/AccountPanel';
 import BookmarkDesc from "./routes/BookmarkDesc";
 import CollectionList from "./routes/CollectionList";
 import CollectionAPI from './services/collection-api-service';
+import TokenService from './services/token-service';
 import BookmarkAPI from './services/bookmark-api-service';
+import ProfileApiService from './services/profile-api-service';
 import BookmarkList from "./routes/BookmarkList/BookmarkList";
 import AddCollection from './routes/AddCollection/AddCollection';
 import Registration from './routes/Registration/Registration';
 import Login from './routes/Login/Login';
 import AddBookmark from './routes/AddBookmark/AddBookmark';
-import MyContext from "./MyContext/MyContext"
+import appContext from "./appContext/appContext"
 import './App.css';
 
 import RegistrationForm from './Components/RegistrationForm/RegistrationForm';
@@ -22,7 +25,8 @@ class App extends Component {
         this.state = {
             collections: [],
             bookmarks: [],
-            hamburgerOpen: false
+            hamburgerOpen: false,
+            profile: {}
         }
     }
 
@@ -72,13 +76,24 @@ class App extends Component {
     componentDidMount() {
 
         CollectionAPI.getCollections().then(([...collections]) => {
-            this.setState({collections: [...collections] })
+            this.setState({ collections: [...collections] })
         })
 
         BookmarkAPI.getBookmarks().then(([...bookmarks]) => {
-            this.setState({bookmarks: [...bookmarks] })
+            this.setState({ bookmarks: [...bookmarks] })
         })
-
+        this.setUserProfile()
+    }
+   
+    setUserProfile() {
+        if (TokenService.hasAuthToken()) {
+            ProfileApiService.getProfile()
+                .then(profile => {
+                    this.setState({
+                        profile
+                    })
+                })
+        }
     }
 
     render() {
@@ -92,20 +107,24 @@ class App extends Component {
         }
 
         return (
-            <MyContext.Provider value={value}>
+            <appContext.Provider value={value}>
                 <div className="App">
+
                     <NavBar swapOpen={this.swapOpen}></NavBar>
                     <MblNav open={this.state.hamburgerOpen}></MblNav>
                     <section className="bookmarksContentBody">
                         <aside>
+                            <AccountPanel profile={this.state.profile}></AccountPanel>
                             <nav>
                                 {< Link to="/AddCollection" > <h4>Add Collection</h4> </Link>}
                                 {< Link to="/AddBookmark" > <h4>Add Bookmark</h4> </Link>}
                             </nav>
                         </aside>
                         <main onClick={this.closeHamburger}>
-                            <Route exact path='/' component={CollectionList} />
-                            <Route exact path='/collection/:collectionId' component={CollectionList} /> {/* Collections Path */}
+                            {/* Renders CollectionList as soon as local storage gets authToken  */}
+                            {(!TokenService.hasAuthToken())
+                                ? <Route exact path='/' component={Login} />
+                                : <Route exact path='/' render={(props) => <CollectionList {...props} profile={this.state.profile} collections={this.state.collections} />} />}
                             <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={this.state.bookmarks} />} />
                             <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={this.state.bookmarks} />} />
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
@@ -115,7 +134,7 @@ class App extends Component {
                         </main>
                     </section>
                 </div>
-            </MyContext.Provider>
+            </appContext.Provider>
         );
     }
 }

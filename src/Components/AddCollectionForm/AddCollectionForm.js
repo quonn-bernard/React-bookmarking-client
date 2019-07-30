@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ValidationError from "../../Components/ValidationError/ValidationError";
 import config from "../../config";
-import MyContext from "../../MyContext/MyContext";
+import appContext from "../../appContext/appContext";
+import TokenService from "../../services/token-service";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -22,7 +23,7 @@ class AddCollectionForm extends Component {
         }
     }
 
-    static contextType = MyContext;
+    static contextType = appContext;
 
     formValid() {
         this.setState({formValid: this.state.nameValid});
@@ -66,7 +67,8 @@ class AddCollectionForm extends Component {
       fetch(`${config.API_ENDPOINT}/collections`, {
         method: 'POST',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `bearer ${TokenService.getAuthToken()}`
         },
         body: JSON.stringify(collectionName),
       })

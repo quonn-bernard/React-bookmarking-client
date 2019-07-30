@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MyContext from "../../MyContext/MyContext"
+import appContext from "../../appContext/appContext"
 import config from "../../config";
 import PropTypes from 'prop-types';
 
@@ -10,7 +10,7 @@ class Bookmark extends Component {
     onDelete: () => {},
   }
 
-  static contextType = MyContext;
+  static contextType = appContext;
 
   handleClickDelete = e => {
     e.preventDefault()
@@ -54,7 +54,7 @@ class Bookmark extends Component {
 
 Bookmark.propTypes = {
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   modified: PropTypes.string,
 };
 export default Bookmark;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Bookmark from "../../Components/Bookmark/Bookmark";
-import MyContext from "../../MyContext/MyContext"
+import appContext from "../../appContext/appContext"
 import { withRouter } from "react-router-dom";
 
 class BookmarkList extends Component {
@@ -12,7 +12,7 @@ class BookmarkList extends Component {
         bookmarks: []
     }
 
-    static contextType = MyContext;
+    static contextType = appContext;
 
     handleDelete = bookmarkId => {
         this
@@ -32,6 +32,7 @@ class BookmarkList extends Component {
                 if(bookmark.collection_id === parseInt(collectionId))
                 return <li key={bookmark.id}>
                     <Bookmark
+                        key={bookmark.id}
                         id={bookmark.id}
                         name={bookmark.name}
                         content={bookmark.content}
