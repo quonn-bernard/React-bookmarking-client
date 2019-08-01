@@ -109,8 +109,6 @@ class App extends Component {
             updateProfile: (e) => this.setState({profile: e}),
             goBack: () => this.handleBackButton()
         }
-
-        console.log(value)
         
         return (
             <appContext.Provider value={value}>
