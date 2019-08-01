@@ -4,23 +4,30 @@ import AuthApiService from '../../services/auth-api-service'
 
 export default class LoginForm extends Component {
   static defaultProps = {
-    onLoginSuccess: () => {}
+    onLoginSuccess: () => { }
   }
 
   state = { error: null }
 
   handleSubmitJwtAuth = ev => {
-
     ev.preventDefault()
     this.setState({ error: null })
     const { username, password } = ev.target
-    
+
+    //login request
     AuthApiService.postLogin({
       username: username.value,
       password: password.value,
     })
+      //login response
       .then(res => {
-          
+        //updates context profile with username value after login
+        this.props.updater({ username: username.value })
+        // {
+        //   if (res.status === 200) {
+        //     
+        //   }
+        // }
         username.value = ''
         password.value = ''
         TokenService.saveAuthToken(res.authToken)
@@ -32,6 +39,7 @@ export default class LoginForm extends Component {
   }
 
   render() {
+
     const { error } = this.state
     return (
       <form

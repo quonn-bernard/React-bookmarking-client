@@ -7,5 +7,5 @@ export default React.createContext({
     AddCollection: () => {},
     AddBookmark: () => {}, 
     goBack: () => {},
-    getProfile: () => {}
+    updateProfile: () => {}
 })
