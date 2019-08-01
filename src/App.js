@@ -73,6 +73,12 @@ class App extends Component {
         this.props.history.push('/');
     }
 
+    updateProfile = profile => {
+        this.setState({
+            profile: profile 
+        })
+    }
+
     componentDidMount() {
 
         CollectionAPI.getCollections().then(([...collections]) => {
@@ -82,30 +88,30 @@ class App extends Component {
         BookmarkAPI.getBookmarks().then(([...bookmarks]) => {
             this.setState({ bookmarks: [...bookmarks] })
         })
-        this.setUserProfile()
-    }
-   
-    setUserProfile() {
+        
         if (TokenService.hasAuthToken()) {
             ProfileApiService.getProfile()
                 .then(profile => {
-                    this.setState({
-                        profile
-                    })
+                    return this.updateProfile(profile)
                 })
         }
     }
 
+   
     render() {
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
+            profile: this.state.profile,
             deleteBookmark: bookmarkId => this.handleDeleteBookmark({ bookmarkId }),
             AddCollection: (e) => this.handleAddCollection(e),
             AddBookmark: (e) => this.handleAddBookmark(e),
+            updateProfile: (e) => this.setState({profile: e}),
             goBack: () => this.handleBackButton()
         }
 
+        console.log(value)
+        
         return (
             <appContext.Provider value={value}>
                 <div className="App">
@@ -114,7 +120,7 @@ class App extends Component {
                     <MblNav open={this.state.hamburgerOpen}></MblNav>
                     <section className="bookmarksContentBody">
                         <aside>
-                            <AccountPanel profile={this.state.profile}></AccountPanel>
+                            <AccountPanel profile={value.profile} ></AccountPanel>
                             <nav>
                                 {< Link to="/AddCollection" > <h4>Add Collection</h4> </Link>}
                                 {< Link to="/AddBookmark" > <h4>Add Bookmark</h4> </Link>}
@@ -123,14 +129,15 @@ class App extends Component {
                         <main onClick={this.closeHamburger}>
                             {/* Renders CollectionList as soon as local storage gets authToken  */}
                             {(!TokenService.hasAuthToken())
-                                ? <Route exact path='/' component={Login} />
-                                : <Route exact path='/' render={(props) => <CollectionList {...props} profile={this.state.profile} collections={this.state.collections} />} />}
-                            <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={this.state.bookmarks} />} />
-                            <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={this.state.bookmarks} />} />
+                                ? <Route exact path='/' render={(props) => <Login {...props} update={value.updateProfile} contextValues={value.up} />} />
+                                : <Route exact path='/' render={(props) => <CollectionList {...props} profile={value.profile} collections={value.collections} />} />}
+                            <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={value.bookmarks} />} />
+                            <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={value.bookmarks} />} />
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
                             <Route path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
                             <Route path='/Register' component={Registration} />{/* Adds new users to database */}
-                            <Route path='/Login' component={Login} />{/* Authenticates Users */}
+                            
+                            {/* <Route exact path='/Login' render={(props) => <Login {...props} contextValues={value.bookmarks} />} /> */}
                         </main>
                     </section>
                 </div>

@@ -1,5 +1,5 @@
 import config from '../config';
-import TokenService from '../services/token-service';
+import TokenService from './token-service';
 
 //gets user profile info
  const ProfileApiService = {
@@ -12,9 +12,12 @@ import TokenService from '../services/token-service';
             }
         })
         .then(res=> 
-            (!res.ok)
+            {
+                console.log(res)
+           return  (!res.ok)
             ? res.json().then(e=>Promise.reject(e))
             :res.json()
+            }
             );
     }
 }
