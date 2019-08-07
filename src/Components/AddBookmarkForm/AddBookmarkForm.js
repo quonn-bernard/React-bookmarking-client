@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import ValidationError from "../../Components/ValidationError/ValidationError";
 import config from "../../config";
 import appContext from "../../appContext/appContext";
+import TokenService from "../../services/token-service";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class AddBookmarkForm extends Component {
     constructor(props) {
@@ -16,41 +18,52 @@ class AddBookmarkForm extends Component {
             bookmarkName: this.nameInput,
             bookmarkContent: this.bookmarkContent,
             collectionName: this.collectionName,
-            type: this.bookmarkType
+            type: this.bookmarkType,
+            nameValid: false,
+            contentValid: false,
+            formValid: false,
+            validationMessages: {
+                name: '',
+                content: '',
+                collectionName: '',
+                type: ''
+            }
         }
     }
 
     static contextType = appContext;
 
-    // formValid() {
-    //     this.setState({ formValid: this.state.nameValid });
-    // }
+    formValid() {
+        this.setState({ formValid: this.state.nameValid, formValid: this.state.contentValid });
+    }
 
-    // validateVals(fieldValue) {
-    //     const fieldErrors = {
-    //         ...this.state.validationMessages
-    //     };
-    //     let hasError = false;
+    validateVals(fieldValue) {
+        const fieldErrors = {
+            ...this.state.validationMessages
+        };
+        let hasError = false;
+        
+        (Object.entries(fieldValue)).forEach(value => {
+            
+            if(value[0] === "name" && value[1].length < 3){
+                alert(`${value[0]} must be longer than 3 letters`)
+                fieldErrors.name = `${value[0]} must be longer than 3 letters`
+                hasError = true;
+            } else if(value[0] === "content" && value[1].length < 3){
+                alert(`${value[0]} must be longer than 3 letters`);
+                fieldErrors.content = `${value[0]} must be longer than 3 letters`;
+                hasError = true;
+            }
 
-    //     fieldValue = fieldValue.trim();
-    //     if (fieldValue.length === 0) {
-    //         fieldErrors.name = 'Name is required';
-    //         hasError = true;
-    //     } else {
-    //         if (fieldValue.length < 3) {
-    //             fieldErrors.name = 'Name must be at least 3 characters long';
-    //             hasError = true;
-    //         } else {
-    //             fieldErrors.name = '';
-    //             hasError = false;
-    //         }
-    //     }
-
-    //     this.setState({
-    //         validationMessages: fieldErrors,
-    //         nameValid: !hasError
-    //     }, this.formValid);
-    // }
+            this.setState({
+                validationMessages: fieldErrors,
+                nameValid: !hasError,
+                contentValid: !hasError
+            }, this.formValid);
+        })
+        // fieldValue = fieldValue.trim();
+        
+    }
 
     AddBookmark = bookmark => {
         fetch(`${config.API_ENDPOINT}/bookmarks`, {
@@ -73,6 +86,7 @@ class AddBookmarkForm extends Component {
             })
     }
 
+    
     updateName(input) {
         this.setState({
             bookmarkName: input,
@@ -98,49 +112,53 @@ class AddBookmarkForm extends Component {
     }
 
     handleSubmit(event) {
-            event.preventDefault();
-        alert(this.context)
+        event.preventDefault();
+
         let collection = this.context.collections.filter(collection => {
-        
             return collection.name === this.state.collectionName
         })
 
-        console.log(collection)
-
         const bookmarkModified = new Date();
         const newBookmark = {
-            // id: uuidv4(),
             name: this.state.bookmarkName,
             modified: bookmarkModified.toISOString(),
             collection_id: collection[0].id,
             content: this.state.bookmarkContent,
             type: this.state.type
         }
-
-        console.log(newBookmark)
+        this.validateVals(newBookmark)
         this.AddBookmark(newBookmark);
     }
 
     render() {
- 
+        if (!TokenService.hasAuthToken()) {
+            return <Redirect to='/login' />
+        }
         return (
             <form onSubmit={e => this.handleSubmit(e)}>
+                <ValidationError
+                    hasError={!this.state.nameValid}
+                    message={this.state.validationMessages.name} />
+                    <ValidationError
+                    hasError={!this.state.contentValid}
+                    message={this.state.validationMessages.content} />
                 <label htmlFor="bookmarkName">BookmarkName</label>
                 <input id="bookmarkName" name="bookmarkName" ref={this.nameInput} onChange={e => this.updateName(e.target.value)} required></input>
                 <label htmlFor="bookmarkContent">Content</label>
                 <input id="bookmarkContent" name="bookmarkContent" ref={this.bookmarkContent} onChange={e => this.updateContent(e.target.value)} required></input>
                 <label htmlFor="collection">Collection</label>
-                {/* <input id="collection" name="collection" ref={this.collectionName} onChange={e => this.updateCollection(e.target.value)} required></input> */}
                 <select onChange={e => this.updateCollection(e.target.value)}>
                     {this.context.collections.map(collection =>
-                        <option key={collection.id} value={collection.name}>{collection.name}</option>
+                        (this.context.profile.id === parseInt(collection.author))
+                            ? <option key={collection.id} value={collection.name}>{collection.name}</option>
+                            : null
                     )}
                 </select>
                 <label htmlFor="type">Bookmark Type</label>
                 <select onChange={e => this.updateType(e.target.value)}>
-                <option value='link'>Link</option>
-                <option value='image'>Image</option>
-                <option value='text'>Text</option>
+                    <option value='link'>Link</option>
+                    <option value='image'>Image</option>
+                    <option value='text'>Text</option>
                 </select>
                 <button>Add Bookmark</button>
                 <Link to="/"><button>Back</button></Link>
@@ -149,8 +167,6 @@ class AddBookmarkForm extends Component {
     }
 }
 
-AddBookmarkForm.defaultProps = {
-    collectionName: 'Movies'
-  };
+
 
 export default withRouter(AddBookmarkForm);
