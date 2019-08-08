@@ -94,11 +94,16 @@ class App extends Component {
                 .then(profile => {
                     return this.updateProfile(profile)
                 })
+        } else{
+        
+                return <Redirect to='/login' />
+            
         }
     }
 
    
     render() {
+        
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
@@ -109,8 +114,6 @@ class App extends Component {
             updateProfile: (e) => this.setState({profile: e}),
             goBack: () => this.handleBackButton()
         }
-
-        console.log(value)
         
         return (
             <appContext.Provider value={value}>
@@ -128,15 +131,14 @@ class App extends Component {
                         </aside>
                         <main onClick={this.closeHamburger}>
                             {/* Renders CollectionList as soon as local storage gets authToken  */}
-                            {(!TokenService.hasAuthToken())
-                                ? <Route exact path='/' render={(props) => <Login {...props} update={value.updateProfile} contextValues={value.up} />} />
-                                : <Route exact path='/' render={(props) => <CollectionList {...props} profile={value.profile} collections={value.collections} />} />}
+                            <Route exact path='/' render={(props) => <CollectionList {...props} profile={value.profile} collections={value.collections} />} />
+                            
                             <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={value.bookmarks} />} />
                             <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={value.bookmarks} />} />
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
                             <Route path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
                             <Route path='/Register' component={Registration} />{/* Adds new users to database */}
-                            
+                            <Route exact path='/login' render={(props) => <Login {...props} update={value.updateProfile} contextValues={value.up} />} />
                             {/* <Route exact path='/Login' render={(props) => <Login {...props} contextValues={value.bookmarks} />} /> */}
                         </main>
                     </section>

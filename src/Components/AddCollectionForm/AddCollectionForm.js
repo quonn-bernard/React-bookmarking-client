@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ValidationError from "../../Components/ValidationError/ValidationError";
 import config from "../../config";
 import appContext from "../../appContext/appContext";
 import TokenService from "../../services/token-service";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 // generates random ids for new collections
 const uuidv4 = require('uuid/v4');
@@ -26,7 +26,7 @@ class AddCollectionForm extends Component {
     static contextType = appContext;
 
     formValid() {
-        this.setState({formValid: this.state.nameValid});
+        this.setState({ formValid: this.state.nameValid });
     }
 
     validateName(fieldValue) {
@@ -56,33 +56,33 @@ class AddCollectionForm extends Component {
     }
 
     guidGenerator() {
-      let S4 = function() {
-         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-      };
-      return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-  }
+        let S4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        };
+        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
 
     AddCollection = name => {
-      const collectionName = {id: uuidv4(), name: name};
-      fetch(`${config.API_ENDPOINT}/collections`, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          'Authorization': `bearer ${TokenService.getAuthToken()}`
-        },
-        body: JSON.stringify(collectionName),
-      })
-        .then(res => {
-          if (!res.ok)
-            return res.json().then(e => Promise.reject(e))
-          return res.json()
+        const collectionName = { id: uuidv4(), name: name };
+        fetch(`${config.API_ENDPOINT}/collections`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `bearer ${TokenService.getAuthToken()}`
+            },
+            body: JSON.stringify(collectionName),
         })
-        .then(() => {
-          this.context.AddCollection(collectionName)
-        })
-        .catch(error => {
-          console.error({ error })
-        })
+            .then(res => {
+                if (!res.ok)
+                    return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+            .then(() => {
+                this.context.AddCollection(collectionName)
+            })
+            .catch(error => {
+                console.error({ error })
+            })
     }
 
     updateName(name) {
@@ -100,11 +100,14 @@ class AddCollectionForm extends Component {
     }
 
     render() {
+        if (!TokenService.hasAuthToken()) {
+            return <Redirect to='/login' />
+        }
         return (
             <form className="" onSubmit={e => this.handleSubmit(e)}>
                 <ValidationError
                     hasError={!this.state.nameValid}
-                    message={this.state.validationMessages.name}/>
+                    message={this.state.validationMessages.name} />
                 <h1>Create A Collection</h1>
                 <div className="form-group">
                     <label htmlFor="collectionName">Name *</label>
@@ -114,7 +117,8 @@ class AddCollectionForm extends Component {
                         name="collectionName"
                         ref={this.nameInput}
                         placeholder="Enter Collection Name"
-                        onChange={e => this.updateName(e.target.value)}></input>
+                        onChange={e => this.updateName(e.target.value)}>
+                    </input>
                 </div>
                 <button
                     type="submit"

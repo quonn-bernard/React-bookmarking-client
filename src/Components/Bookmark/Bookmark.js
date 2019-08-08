@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import appContext from "../../appContext/appContext"
 import config from "../../config";
 import PropTypes from 'prop-types';
+import TokenService from "../../services/token-service";
 
 class Bookmark extends Component {
   
@@ -19,7 +20,8 @@ class Bookmark extends Component {
     fetch(`${config.API_ENDPOINT}/bookmarks/${bookmarkId}`, {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization': `bearer ${TokenService.getAuthToken()}`
       },
     })
       .then(res => {

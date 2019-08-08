@@ -20,7 +20,6 @@ export default class LoginPage extends Component {
 
   
   render() {
-    console.log(this.props.value)
     return (
       <section className='LoginPage'>
         <h2>Login</h2>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import appContext from "../appContext/appContext";
 import CollectionApiService from '../services/collection-api-service';
 import TokenService from '../services/token-service';
@@ -37,6 +37,9 @@ class CollectionList extends Component {
     }
 
     render() {
+        if (!TokenService.hasAuthToken()) {
+            return <Redirect to='/login' />
+        }
         const {
             collections = []
         } = this.context
@@ -45,6 +48,7 @@ class CollectionList extends Component {
         })
         return (
             <div className="collection">
+                {/* <a href="https://www.google.com">Google</a> */}
                 <Link to="/AddCollection" style={{ color: "white" }}>Add Collection</Link>
                 {userCollections.map(collection => {
                     return <div key={collection.id} className="collectionLink">
