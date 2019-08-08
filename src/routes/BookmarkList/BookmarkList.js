@@ -24,11 +24,11 @@ class BookmarkList extends Component {
     render() {
         const { collectionId } = this.props.match.params
         const { bookmarks = [] } = this.context
-
+        console.log(bookmarks)
         let bookmarksForCollection = [];
 
         if(this.props.bookmarks.length){
-            bookmarksForCollection = this.props.bookmarks.map(bookmark => {
+            bookmarksForCollection = bookmarks.map(bookmark => {
                 if(bookmark.collection_id === parseInt(collectionId))
                 return <li key={bookmark.id}>
                     <Bookmark
