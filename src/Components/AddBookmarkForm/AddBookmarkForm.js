@@ -115,6 +115,7 @@ class AddBookmarkForm extends Component {
         event.preventDefault();
 
         let collection = this.context.collections.filter(collection => {
+    
             return collection.name === this.state.collectionName
         })
 
