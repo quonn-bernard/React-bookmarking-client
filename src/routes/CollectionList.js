@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import appContext from "../appContext/appContext";
 import CollectionApiService from '../services/collection-api-service';
+import Collection from '../Components/Collection/Collection';
 import TokenService from '../services/token-service';
 import ProfileApiService from '../services/profile-api-service';
 import { withRouter } from "react-router-dom";
@@ -47,15 +48,11 @@ class CollectionList extends Component {
             return parseInt(collection.author) === this.state.profile.id
         })
         return (
-            <div className="collection">
-                {/* <a href="https://www.google.com">Google</a> */}
-                <Link to="/AddCollection" style={{ color: "white" }}>Add Collection</Link>
+            <div className="collection-grid">
                 {userCollections.map(collection => {
-                    return <div key={collection.id} className="collectionLink">
-                        <Link to={"/collection/" + collection.id}>
-                            <span>{collection.name}</span>
-                        </Link>
-                    </div>
+                    return <Collection key={collection.id} name={collection.name} >
+                        </Collection>
+                    
                 })}
             </div>
         )
