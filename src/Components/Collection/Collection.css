@@ -1,0 +1,30 @@
+.collection {
+  background: #53565975;
+  height: 175px;
+  height: 175px;
+  width: 175px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+.collection > article{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.collection-name {
+  color: white;
+  font-size: 10px;
+}
+.collection-grid {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-row-gap: 20px;
+}
+.folder{
+    color:springgreen;
+}
