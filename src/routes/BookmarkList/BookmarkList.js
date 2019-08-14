@@ -24,7 +24,7 @@ class BookmarkList extends Component {
     render() {
         const { collectionId } = this.props.match.params
         const { bookmarks = [] } = this.context
-        console.log(bookmarks)
+    
         let bookmarksForCollection = [];
 
         if(this.props.bookmarks.length){
