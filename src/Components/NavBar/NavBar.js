@@ -7,7 +7,7 @@ class NavBar extends React.Component {
         return (
             <nav className="nav-grid">
                 <div>
-                    <Link to='/'><h1>V-MARKER</h1></Link>
+                    <Link to='/'><h1>{this.props.children}</h1></Link>
                 </div>
                 <div className="nav-menu-grid">
                     <div className="acct-btn"><h5>AP</h5></div>
@@ -18,7 +18,7 @@ class NavBar extends React.Component {
                         <div></div>
                     </div>
                 </div>
-
+                
             </nav>
         )
     }
