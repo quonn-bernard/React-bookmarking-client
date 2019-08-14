@@ -6,6 +6,9 @@ import Collection from '../Components/Collection/Collection';
 import TokenService from '../services/token-service';
 import ProfileApiService from '../services/profile-api-service';
 import { withRouter } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
+
 import "./CollectionList.css";
 
 class CollectionList extends Component {
@@ -38,23 +41,33 @@ class CollectionList extends Component {
     }
 
     render() {
+        let count;
+        const folder = <FontAwesomeIcon icon={faFolder} className="littleFolder" />
+        const shadowFolder = <FontAwesomeIcon icon={faFolder} className="shadowFolder" />
         if (!TokenService.hasAuthToken()) {
             return <Redirect to='/login' />
         }
         const {
-            collections = []
+            collections = [], bookmarks = []
         } = this.context
+
+        console.log(bookmarks)
         const userCollections = collections.filter(collection => {
             return parseInt(collection.author) === this.state.profile.id
         })
         return (
-            <div className="collection-grid">
-                {userCollections.map(collection => {
-                    return <Collection key={collection.id} name={collection.name} >
+            <div className="collection-container">
+                <h2>{shadowFolder}{folder} Collections ({userCollections.length})</h2>
+                <div className="collection-grid">
+                    {userCollections.map((collection, count) => {
+                        
+                        return <Collection bm={bookmarks} key={collection.id} id={collection.id} name={collection.name} author={collection.author}>
                         </Collection>
-                    
-                })}
+
+                    })}
+                </div>
             </div>
+
         )
     }
 }
