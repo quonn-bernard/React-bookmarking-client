@@ -1,0 +1,14 @@
+btn.aside-btn{
+    padding: 15px;
+    color: white;
+    background-image: linear-gradient(to bottom right,#31383c33,springgreen);
+    border-bottom: .25px solid white;
+    font-size:14px;
+    text-decoration: none;
+    display:block;
+}
+
+btn.aside-btn:hover{
+    background-color: springgreen;
+    transition: .3s;
+}
