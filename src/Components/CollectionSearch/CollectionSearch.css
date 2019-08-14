@@ -1,0 +1,47 @@
+.collection-search-input{
+    width: 80%;
+}
+.collection-search-input > input{
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    border: .5px solid white;
+    height:30px;
+    padding: 0 7.5px;
+    width: 73%;
+    display: inline-block;
+    border-radius: 3px;
+    color: lightgray;
+}
+.collection-search-input > input::placeholder{
+    color: lightgray;
+    font-size: 14px;
+
+}
+.collection-search-input > button{
+    display: inline-block;
+    width: 15%;
+    height: 31px;
+    margin-left:5px;
+    background: black;
+    border: .5px solid white;
+    color: lightgray;
+    border-radius: 3px;
+}
+
+.collection-search-input > button:hover{
+    background: rgb(31, 180, 106);
+    transition: .3s;
+}
+
+.collection-search-input > input:hover{
+    background: rgb(255, 255, 255);
+    transition: .3s;
+    color: black;
+}
+
+.collection-search-input > input:focus{
+    background: rgb(255, 255, 255);
+    transition: .3s;
+    border: 0px solid blue;
+}
