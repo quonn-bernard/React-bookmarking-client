@@ -1,30 +1,117 @@
 .collection {
-  background: #53565975;
-  height: 175px;
-  height: 175px;
-  width: 175px;
+  background: #535659;
+  height: auto;
+  width: 140px;
   position: relative;
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 7px 3px 3px #5e6061;
+  border: 0.5px solid white;
+  padding: 15px 15px 20px;
+}
+
+.collection:hover {
+  border: 0.5px solid springgreen;
+  box-shadow: 1.5px 1.5px 1.5px springgreen;
+  transition: 0.4s;
+}
+.collection > article {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
 }
-.collection > article{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.collection > article > span {
+  text-decoration: none;
+}
+.collection > .shadowFolder {
+  color: black;
+  margin-right: -66px;
+  margin-bottom: -2px;
+}
+a > article > span.count-text {
+  top: 78px;
+  position: absolute;
+  color: white;
+  text-shadow: 1px 1px 1px #31383c;
+  border: 0.5px solid white;
+  border-radius: 66%;
+  padding: 7px 7px 5px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #31383c;
+  box-shadow: 0.5px 0.5px 0.5px #31383c;
+}
+svg.svg-inline--fa.fa-folder.fa-w-16.shadowFolder.fa-4x {
+  color: #000;
+  margin-right: -66px;
+  margin-bottom: -2px;
 }
 .collection-name {
   color: white;
-  font-size: 10px;
+  text-shadow: 1px 1px 1px #31383c;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 .collection-grid {
-  padding: 30px;
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-row-gap: 20px;
+  grid-template-columns: auto auto auto auto;
+  grid-row-gap: 60px;
 }
-.folder{
-    color:springgreen;
+.collection-container {
+  padding: 30px;
+}
+.collection-container > h2 {
+  padding-top: 0;
+  margin-top: 15px;
+  margin-bottom: 45px;
+  text-shadow: 1px 1px 1px white;
+}
+
+#root
+  > div
+  > section
+  > main
+  > div
+  > h2
+  > svg.svg-inline--fa.fa-folder.fa-w-16.shadowFolder {
+  color: springgreen;
+}
+
+#root
+  > div
+  > section
+  > main
+  > div
+  > h2
+  > svg.svg-inline--fa.fa-folder.fa-w-16.littleFolder
+  > path {
+  color: springgreen;
+}
+
+#root
+  > div
+  > section
+  > main
+  > div
+  > h2
+  > svg.svg-inline--fa.fa-folder.fa-w-16.shadowFolder {
+  color: black;
+  margin-right: -25px;
+  margin-bottom: -1px;
+}
+.folder {
+  color: springgreen;
+}
+
+.file-icon {
+  font-size: 14px;
+  margin-right: 3px;
+  color: springgreen;
 }
