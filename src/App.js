@@ -19,7 +19,7 @@ import Login from './routes/Login/Login';
 import AddBookmark from './routes/AddBookmark/AddBookmark';
 import appContext from "./appContext/appContext"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faSignOutAlt, faPlus, faFolder } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faSignOutAlt, faAtlas, faFolder, faBookmark } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
 import RegistrationForm from './Components/RegistrationForm/RegistrationForm';
@@ -31,7 +31,9 @@ class App extends Component {
             collections: [],
             bookmarks: [],
             hamburgerOpen: false,
-            profile: {}
+            profile: {},
+            filteredCollection: [],
+            searchTerm: ''
         }
     }
 
@@ -94,7 +96,7 @@ class App extends Component {
     componentDidMount() {
 
         CollectionAPI.getCollections().then(([...collections]) => {
-            this.setState({ collections: [...collections] })
+            this.setState({ collections: [...collections], filteredCollection: [...collections] })
         })
 
         BookmarkAPI.getBookmarks().then(([...bookmarks]) => {
@@ -113,14 +115,31 @@ class App extends Component {
         }
     }
 
+    handleFilterInputChange(e) {
+        e.preventDefault()
+        let collections = this.state.collections.filter(collection => {
+            if (collection.name.includes(e.target.value) && this.state.collections.length && this.state.profile.id === parseInt(collection.author)) {
+                return <div>{collection}</div>
+            }
+        })
+
+        this.setState({
+            filteredCollection: collections,
+            searchTerm: e.target.value
+        })
+    }
 
     render() {
+        const open = (!this.state.hamburgerOpen && 'ease-open') || 'ease-close';
+        const over = (!this.state.hamburgerOpen && 'ease-right') || 'ease-left'; 
         const search = <FontAwesomeIcon icon={faSearch} className="" />
         const userIcon = <FontAwesomeIcon icon={faUser} className="btn-icon" />
         const signOutIcon = <FontAwesomeIcon icon={faSignOutAlt} className="btn-icon" />
-        const plusIcon = <FontAwesomeIcon icon={faPlus} className="btn-icon" />
-        const folder = <FontAwesomeIcon style={{marginLeft: "50px", marginTop: "-10px", fontSize: "26px"}} icon={faFolder} className=" thumbsUp fa-4x" />
-        const shadowFolder = <FontAwesomeIcon style={{marginLeft: "10px" , fontSize: "26px", marginBottom: "-6px"}} icon={faFolder} className="shadowFolder fa-4x" />
+        const atlasIcon = <FontAwesomeIcon icon={faAtlas} className="btn-icon" />
+        const bookmarkIcon = <FontAwesomeIcon icon={faBookmark} className="btn-icon" />
+        const folder = <FontAwesomeIcon style={{ marginLeft: "50px", marginTop: "-10px", fontSize: "26px" }} icon={faFolder} className=" thumbsUp fa-4x" />
+        const resultFolder = <FontAwesomeIcon style={{ fontSize: "16px", color: "springgreen", marginRight: "5px" }} icon={faFolder} className="" />
+        const shadowFolder = <FontAwesomeIcon style={{ marginLeft: "10px", fontSize: "26px", marginBottom: "-6px" }} icon={faFolder} className="shadowFolder fa-4x" />
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
@@ -138,29 +157,47 @@ class App extends Component {
 
                     <NavBar swapOpen={this.swapOpen}>
                         <Logo>
-                            <span style={{fontSize: "11px"}} className="folder">{shadowFolder}{folder}</span>
-                            <span style={{textDecoration:"none", fontSize: "20px", marginLeft: "10px", color: "black"}}>BOOKMARKER</span>
+                            <span style={{ fontSize: "11px" }} className="folder">{shadowFolder}{folder}</span>
+                            <span style={{ textDecoration: "none", fontSize: "20px", marginLeft: "10px", color: "black" }}>BOOKMARKER</span>
                         </Logo>
                     </NavBar>
-                    <MblNav open={this.state.hamburgerOpen}></MblNav>
+                    {/* <MblNav open={this.state.hamburgerOpen}></MblNav> */}
                     <section className="bookmarksContentBody">
-                        <aside className="sidebar">
-                            <AccountPanel icon={userIcon} profile={value.profile} ></AccountPanel>
-                            {(TokenService.hasAuthToken())
-                                ? < Link onClick={this.logout}> <AsideBtn icon={signOutIcon} name={'Logout'}></AsideBtn> </Link>
-                                : <AsideBtn name={'Please Login'}></AsideBtn>}
-                            <nav>
-                                {< Link to="/AddCollection" > <AsideBtn icon={plusIcon} name="Add Collection"></AsideBtn> </Link>}
-                                {< Link to="/AddBookmark" > <AsideBtn icon={plusIcon} name={'Add Bookmark'}></AsideBtn> </Link>}
-                            </nav>
+
+                        {/* Sidebar will contain 4 buttons and a search box filter*/}
+                        <aside  id="sidebar" className={open} >
+                            <div>
+                                <AccountPanel icon={userIcon} profile={value.profile} ></AccountPanel>
+                                {(TokenService.hasAuthToken())
+                                    ? < Link onClick={this.logout}> <AsideBtn icon={signOutIcon} name={'Logout'}></AsideBtn> </Link>
+                                    : <AsideBtn name={'Please Login'}></AsideBtn>}
+
+                                {< Link to="/AddCollection" > <AsideBtn icon={atlasIcon} name="Add Collection"></AsideBtn> </Link>}
+                                {< Link to="/AddBookmark" > <AsideBtn icon={bookmarkIcon} name={'Add Bookmark'}></AsideBtn> </Link>}
+                            </div>
+
+                            {/* Grey area beneath last sidebar button/ features search box filter */}
                             <div className="bottom-sidebar">
                                 <CollectionSearch>
-                                    <input placeholder="Search Collections"></input>
+                                    <input placeholder="Search Collections" onChange={(e) => this.handleFilterInputChange(e)}></input>
                                     <button>{search}</button>
                                 </CollectionSearch>
+                                <div className="results-text">
+                                    <p>RESULTS</p>
+                                </div>
+
+                                <div id="sidebar-filter">
+                                    {(this.state.filteredCollection.length > 0)
+                                        ? this.state.filteredCollection.map(collection => {
+                                            if(parseInt(collection.author) === this.state.profile.id)
+                                            return <div className="sidebar-filter-result"><p>{resultFolder}{collection.name}</p></div>
+                                        })
+                                        : null}
+                                </div>
+
                             </div>
                         </aside>
-                        <main onClick={this.closeHamburger}>
+                        <main onClick={this.closeHamburger} className={over}>
                             {/* Renders CollectionList as soon as local storage gets authToken  */}
                             <Route exact path='/' render={(props) => <CollectionList {...props} profile={value.profile} collections={value.collections} />} />
 
