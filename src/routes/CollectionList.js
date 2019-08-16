@@ -51,13 +51,12 @@ class CollectionList extends Component {
             collections = [], bookmarks = []
         } = this.context
 
-        console.log(bookmarks)
         const userCollections = collections.filter(collection => {
             return parseInt(collection.author) === this.state.profile.id
         })
         return (
             <div className="collection-container">
-                <h2>{shadowFolder}{folder} Collections ({userCollections.length})</h2>
+                <h2>{shadowFolder}{folder} {this.context.profile.username}'s Collections ({userCollections.length})</h2>
                 <div className="collection-grid">
                     {userCollections.map((collection, count) => {
                         
