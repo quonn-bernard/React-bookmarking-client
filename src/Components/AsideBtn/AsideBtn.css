@@ -6,6 +6,10 @@ btn.aside-btn{
     font-size:14px;
     text-decoration: none;
     display:block;
+    transition: .3s;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #333;
 }
 
 btn.aside-btn:hover{
