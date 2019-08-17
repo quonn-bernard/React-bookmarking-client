@@ -11,12 +11,13 @@
   --header-height: 25px;
 }
 
-html, body {
+html,
+body {
   max-width: 100%;
   overflow-x: hidden;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
@@ -24,13 +25,11 @@ a{
   display: grid;
   grid-template-columns: 75% auto;
   min-width: 320px;
-  border: 1px solid black;
+  border-bottom: 1px solid white;
   box-shadow: 1px 1px 1px #999;
+  background-image: linear-gradient(to bottom right,#5e6061,grey);
 }
 
-.nav-grid > div {
-  /* border: 1px solid black; */
-}
 .nav-grid > div > ul {
   list-style: none;
   display: none;
@@ -52,23 +51,24 @@ a{
 .hamburger-icon > div {
   width: 25px;
   height: 4px;
-  background-color: black;
+  background-color: #535659;
   margin: 4px 0;
   display: block;
   border-radius: 5px;
 }
 
 .hamburger-icon {
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     to bottom right,
     #31383c33,
     springgreen,
     #31ab6e
-  );
+  ); */
+  background: white;
   border: 0.75px solid black;
   padding: 0 5px;
   border-radius: 3px;
-  box-shadow: 5px 1px 1px slategrey;
+  box-shadow: 5px 1px 1px #333;
   transition: 0.3s;
 }
 
@@ -84,15 +84,100 @@ a{
   width: 235px;
 }
 
+.ease-right > div > ul {
+  padding-left: 0px;
+}
+
+.bookmark {
+  list-style: none;
+  padding: 10px;
+  color: white;
+  /* border-radius:5px; */
+  /* box-shadow: 2px 2px 2px #999; */
+}
+
+.bookmark-top {
+  background-image: linear-gradient(to bottom right,#5e6061,grey);
+  margin-bottom: 0;
+  border: 1px solid black;
+  padding: 0;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 3px 3px 3px #999;
+  transition: .4s;
+}
+.bookmark-top:hover{
+  transition: .4s;
+  background: green;
+}
+.bookmark-top > header > p {
+  color: #31383c;
+  margin-top: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.bookmark-top > h1 > a {
+  color: white;
+}
+.bookmark-top > header {
+  display: block;
+  background: white;
+  padding: 4px 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /* border: .5px solid black; */
+}
+.bookmark-top > i > svg > path {
+  padding: 20px;
+}
+
+.bookmark-bottom {
+  padding: 10px;
+  background: white;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  color: black;
+  border-top-width: 0;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-shadow: 3px 3px 3px #999;
+}
+.bookmark-bottom > button {
+  background: #31383c;
+  color: white;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 5px;
+}
+
+.bookmark > div > h1 > a {
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: springgreen;
+}
+
 .bookmarksContentBody {
   display: grid;
   grid-template-columns: 230px auto;
 }
 
+.bmList {
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+.actual-bookmark > h1{
+  display: inline-block;
+  background: green;
+  padding: 5px 7px;
+  border-radius: 5px;
+  color: white;
+}
 aside {
-  background: #31383c;
-  position:absolute;
-  
+  background-image: linear-gradient(to bottom right,#5e6061,grey);
+  position: absolute;
 }
 .btn-icon {
   font-size: 8px;
@@ -108,23 +193,28 @@ aside {
   /* display: flex;
   flex-direction: column; */
 }
+.sidebar-filter-result > a{
+  color: white;
+}
 .sidebar-filter-result {
   color: lightgray;
   text-align: left;
-  font-size: 10px;
+  font-size: 12px;
   transition: 0.3s;
   border-bottom: 0.5px dashed lightgray;
+  margin-bottom: 5px;
+  padding: 10px 3px;
 }
 .sidebar-filter-result:last-child {
   border-bottom: none;
 }
 .sidebar-filter-result:hover {
-  font-size: 16px;
-  padding: 0 5px;
+  font-size: 14px;
+  padding: 5px;
   margin: 0;
   transition: 0.3s;
   background: green;
-  border: .5px solid lightgray;
+  border: 0.5px solid lightgray;
   border-radius: 3px;
 }
 #sidebar-filter {
@@ -151,10 +241,9 @@ aside {
   margin: 0;
 }
 main {
-  background-image: linear-gradient(to bottom right, #31383c33, #39a96b63);
+  /* background-image: linear-gradient(to bottom right, #31383c33, #39a96b63); */
   padding: 0 30px;
-  position:absolute;
-  height: 710px;
+  position: absolute;
 }
 
 header {
@@ -162,6 +251,12 @@ header {
 }
 
 /* classes */
+.green-text{
+  color: green;
+}
+.text-shadow{
+  text-shadow: 1px 1px 1px #333;
+}
 .ease-close {
   left: -209px;
   transition: 0.3s;

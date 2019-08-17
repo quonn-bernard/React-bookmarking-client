@@ -13,6 +13,6 @@ btn.aside-btn{
 }
 
 btn.aside-btn:hover{
-    background-color: springgreen;
+    background: green;
     transition: .3s;
 }

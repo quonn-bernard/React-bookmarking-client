@@ -1,6 +1,5 @@
 .collection {
-  background: #535659;
-  height: auto;
+  background-image: linear-gradient(to bottom right,#5e6061,grey);  height: auto;
   width: 160px;
   position: relative;
   display: -webkit-flex;
@@ -9,11 +8,12 @@
   justify-content: center;
   -webkit-align-items: center;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 10px 3px 3px #5e6061;
-  border: 1px solid white;
+  border: 1px solid #535659;
   padding: 15px 15px 20px;
-  transition: .3s;
+  -webkit-transition: 0.3s;
+  transition: 0.4s;
 }
 
 .collection:hover {
