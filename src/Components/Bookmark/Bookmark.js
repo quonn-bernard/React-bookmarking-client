@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import TokenService from "../../services/token-service";
 
 class Bookmark extends Component {
-  
-  static defaultProps ={
-    onDelete: () => {},
+
+  static defaultProps = {
+    onDelete: () => { },
   }
 
   static contextType = appContext;
@@ -40,16 +40,25 @@ class Bookmark extends Component {
   }
 
   render() {
-    
-    const { name, id, modified } = this.props
+    const { name, id, type } = this.props
     return (
-        <div key={id}>
-            <h1>
-            <Link to={'/bookmark/'+ id}>  {name}  </Link> 
-            </h1>
-            <button type="button" onClick={this.handleClickDelete}>Delete</button>
-            <p>{modified}</p>
+      <>
+        <div key={id} className="bookmark-top">
+          <header>
+            <p>({type})</p>
+          </header>
+          <i>{this.props.icon}</i>
+          <h1>
+            <Link to={'/bookmark/' + id}> "{name}"  </Link>
+          </h1>
+          <p>CREATED BY: <span style={{color: "springgreen", textTransform: "uppercase"}}>{this.context.profile.username}</span></p>
+
+
         </div>
+        <div className="bookmark-bottom">
+          <button type="button" onClick={this.handleClickDelete}>Delete</button>
+        </div>
+      </>
     )
   }
 }
