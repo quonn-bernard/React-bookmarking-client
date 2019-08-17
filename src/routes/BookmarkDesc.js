@@ -83,17 +83,17 @@ class BookmarkDesc extends Component {
             //     : medium = 'TEST'
             
              return (
-            <div>
+            <div className="actual-bookmark">
                 <h1>
-                   {myBookmark[0].name}
+                   "{myBookmark[0].name}" 
                 </h1>
-                <button onClick={this.handleClickDelete}>Delete</button>
                 {/* <p>{urlScreenshot}</p> */}
-                {medium}
-                {/* <p>{myBookmark[0].content}</p> */}
-                <p>{myBookmark[0].modified}</p>
-                <p>{myBookmark[0].type}</p> 
-                <Link to="/"><button>Back</button></Link>
+                <p>Posted on <span className="green-text">{myBookmark[0].modified}.</span></p>
+                <hr></hr>
+                <p>({myBookmark[0].type})</p>
+                <p>{medium}</p>
+                
+                
             </div>
         )
     }
