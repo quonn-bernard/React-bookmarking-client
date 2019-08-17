@@ -140,6 +140,7 @@ class App extends Component {
         const folder = <FontAwesomeIcon style={{ marginLeft: "50px", marginTop: "-10px", fontSize: "26px" }} icon={faFolder} className=" thumbsUp fa-4x" />
         const resultFolder = <FontAwesomeIcon style={{ fontSize: "16px", color: "springgreen", marginRight: "5px" }} icon={faFolder} className="" />
         const shadowFolder = <FontAwesomeIcon style={{ marginLeft: "10px", fontSize: "26px", marginBottom: "-6px" }} icon={faFolder} className="shadowFolder fa-4x" />
+        const bmFolder = <FontAwesomeIcon style={{ fontSize: "26px", margin: "15px 5px -10px 0", color: "springgreen"}} icon={faBookmark} className="shadowFolder fa-4x" />
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
@@ -158,7 +159,7 @@ class App extends Component {
                     <NavBar swapOpen={this.swapOpen}>
                         <Logo>
                             <span style={{ fontSize: "11px" }} className="folder">{shadowFolder}{folder}</span>
-                            <span style={{ textDecoration: "none", fontSize: "20px", marginLeft: "10px", color: "black" }}>BOOKMARKER</span>
+                            <span style={{ textDecoration: "none", fontSize: "20px", marginLeft: "4px", color: "white", fontStyle: "italic" }}>BOOKMARKER</span>
                         </Logo>
                     </NavBar>
                     {/* <MblNav open={this.state.hamburgerOpen}></MblNav> */}
@@ -172,8 +173,8 @@ class App extends Component {
                                     ? < Link onClick={this.logout}> <AsideBtn icon={signOutIcon} name={'Logout'}></AsideBtn> </Link>
                                     : <AsideBtn name={'Please Login'}></AsideBtn>}
 
-                                {< Link to="/AddCollection" > <AsideBtn icon={atlasIcon} name="Add Collection"></AsideBtn> </Link>}
-                                {< Link to="/AddBookmark" > <AsideBtn icon={bookmarkIcon} name={'Add Bookmark'}></AsideBtn> </Link>}
+                                {< Link to="/AddCollection" > <AsideBtn icon={atlasIcon} name="Create Collection"></AsideBtn> </Link>}
+                                {< Link to="/AddBookmark" > <AsideBtn icon={bookmarkIcon} name={'Create Bookmark'}></AsideBtn> </Link>}
                             </div>
 
                             {/* Grey area beneath last sidebar button/ features search box filter */}
@@ -190,7 +191,7 @@ class App extends Component {
                                     {(this.state.filteredCollection.length > 0)
                                         ? this.state.filteredCollection.map(collection => {
                                             if(parseInt(collection.author) === this.state.profile.id)
-                                            return <div className="sidebar-filter-result"><p>{resultFolder}{collection.name}</p></div>
+                                            return <div className="sidebar-filter-result"><Link to={"/collection/" + collection.id}>{resultFolder}{collection.name}</Link></div>
                                         })
                                         : null}
                                 </div>
@@ -201,7 +202,7 @@ class App extends Component {
                             {/* Renders CollectionList as soon as local storage gets authToken  */}
                             <Route exact path='/' render={(props) => <CollectionList {...props} profile={value.profile} collections={value.collections} />} />
 
-                            <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} bookmarks={value.bookmarks} />} />
+                            <Route path='/collection/:collectionId' render={(props) => <BookmarkList {...props} icon={bmFolder} bookmarks={value.bookmarks} />} />
                             <Route path='/bookmark/:bookmarkId' render={(props) => <BookmarkDesc {...props} bookmarks={value.bookmarks} />} />
                             <Route exact path='/AddCollection' component={AddCollection} /> {/*Add Collection Form Path*/}
                             <Route path='/AddBookmark' component={AddBookmark} />{/* Add Bookmark Form Path */}
