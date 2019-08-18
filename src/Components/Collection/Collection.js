@@ -9,9 +9,7 @@ class Collection extends React.Component {
     render() {
         let matches = this.props.bm.filter(bm => {
             return (bm.collection_id === this.props.id)
-        }
-
-        )
+        })
 
         const folder = <FontAwesomeIcon icon={faFolder} className=" thumbsUp fa-4x" />
         const shadowFolder = <FontAwesomeIcon icon={faFolder} className="shadowFolder fa-4x" />
