@@ -22,7 +22,7 @@ export default class LoginPage extends Component {
   render() {
     return (
       <section className='LoginPage'>
-        <h2>Login</h2>
+        <h2 className="form-header">Login</h2>
         <LoginForm
           updater={this.props.update}
           contextValues={this.props}
