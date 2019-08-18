@@ -42,15 +42,15 @@ class AddBookmarkForm extends Component {
             ...this.state.validationMessages
         };
         let hasError = false;
-        
+
         (Object.entries(fieldValue)).forEach(value => {
-            
-            if(value[0] === "name" && value[1].length < 3){
-                alert(`${value[0]} must be longer than 3 letters`)
+
+            if (value[0] === "name" && value[1].length < 3) {
+                // alert(`${value[0]} must be longer than 3 letters`)
                 fieldErrors.name = `${value[0]} must be longer than 3 letters`
                 hasError = true;
-            } else if(value[0] === "content" && value[1].length < 3){
-                alert(`${value[0]} must be longer than 3 letters`);
+            } else if (value[0] === "content" && value[1].length < 3) {
+                // alert(`${value[0]} must be longer than 3 letters`);
                 fieldErrors.content = `${value[0]} must be longer than 3 letters`;
                 hasError = true;
             }
@@ -62,7 +62,7 @@ class AddBookmarkForm extends Component {
             }, this.formValid);
         })
         // fieldValue = fieldValue.trim();
-        
+
     }
 
     AddBookmark = bookmark => {
@@ -86,7 +86,7 @@ class AddBookmarkForm extends Component {
             })
     }
 
-    
+
     updateName(input) {
         this.setState({
             bookmarkName: input,
@@ -113,9 +113,7 @@ class AddBookmarkForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
         let collection = this.context.collections.filter(collection => {
-    
             return collection.name === this.state.collectionName
         })
 
@@ -128,25 +126,55 @@ class AddBookmarkForm extends Component {
             type: this.state.type
         }
         this.validateVals(newBookmark)
-        this.AddBookmark(newBookmark);
+        // if(this.state.validationMessages){
+            this.AddBookmark(newBookmark);
+        // }else{
+        //     console.log("gggggg")
+        // }
+        
     }
 
     render() {
+        let contentInput;
+        let placeholderVal;
+        if (this.state.type === "text") {
+            placeholderVal = "Enter Text Here"
+            contentInput = <><label htmlFor="bookmarkContent">Content</label>
+                <textarea id="bookmarkContent" name="bookmarkContent" placeholder={placeholderVal} ref={this.bookmarkContent} onChange={e => this.updateContent(e.target.value)} required></textarea>
+            </>
+        } else if (this.state.type === "image") {
+            placeholderVal = "https://yourimgurl.jpg"
+            contentInput = <><label htmlFor="bookmarkContent">Image Address</label>
+                <input id="bookmarkContent" name="bookmarkContent" placeholder={placeholderVal} ref={this.bookmarkContent} onChange={e => this.updateContent(e.target.value)} required></input>
+            </>
+        } else {
+            placeholderVal = "Enter Website Address Here"
+            contentInput = <><label htmlFor="bookmarkContent">Webpage Address</label>
+                <input id="bookmarkContent" name="bookmarkContent" placeholder={placeholderVal} ref={this.bookmarkContent} onChange={e => this.updateContent(e.target.value)} required></input>
+            </>
+        }
+
         if (!TokenService.hasAuthToken()) {
             return <Redirect to='/login' />
         }
         return (
             <form onSubmit={e => this.handleSubmit(e)}>
                 <ValidationError
+                    className="validation-error"
                     hasError={!this.state.nameValid}
                     message={this.state.validationMessages.name} />
-                    <ValidationError
+                <ValidationError
                     hasError={!this.state.contentValid}
                     message={this.state.validationMessages.content} />
                 <label htmlFor="bookmarkName">BookmarkName</label>
-                <input id="bookmarkName" name="bookmarkName" ref={this.nameInput} onChange={e => this.updateName(e.target.value)} required></input>
-                <label htmlFor="bookmarkContent">Content</label>
-                <input id="bookmarkContent" name="bookmarkContent" ref={this.bookmarkContent} onChange={e => this.updateContent(e.target.value)} required></input>
+                <input id="bookmarkName" name="bookmarkName" ref={this.nameInput} placeholder="Enter A Name" onChange={e => this.updateName(e.target.value)} required></input>
+                <label htmlFor="type">Bookmark Type</label>
+                <select onChange={e => this.updateType(e.target.value)}>
+                    <option value='link'>Link</option>
+                    <option value='image'>Image</option>
+                    <option value='text'>Text</option>
+                </select>
+                {contentInput}
                 <label htmlFor="collection">Collection</label>
                 <select onChange={e => this.updateCollection(e.target.value)}>
                     {this.context.collections.map(collection =>
@@ -155,19 +183,10 @@ class AddBookmarkForm extends Component {
                             : null
                     )}
                 </select>
-                <label htmlFor="type">Bookmark Type</label>
-                <select onChange={e => this.updateType(e.target.value)}>
-                    <option value='link'>Link</option>
-                    <option value='image'>Image</option>
-                    <option value='text'>Text</option>
-                </select>
-                <button>Add Bookmark</button>
-                <Link to="/"><button>Back</button></Link>
+                <button>Submit Bookmark</button>
             </form>
         )
     }
 }
-
-
 
 export default withRouter(AddBookmarkForm);
