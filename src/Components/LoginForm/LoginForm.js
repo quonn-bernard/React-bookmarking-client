@@ -21,13 +21,10 @@ export default class LoginForm extends Component {
     })
       //login response
       .then(res => {
+        console.log(res)
         //updates context profile with username value after login
         this.props.updater({ username: username.value })
-        // {
-        //   if (res.status === 200) {
-        //     
-        //   }
-        // }
+       
         username.value = ''
         password.value = ''
         TokenService.saveAuthToken(res.authToken)
@@ -49,7 +46,7 @@ export default class LoginForm extends Component {
         <div role='alert'>
           {error && <p className='red'>{error}</p>}
         </div>
-        <div className='username'>
+        
           <label htmlFor='LoginForm__user_name'>
             User name
           </label>
@@ -58,8 +55,7 @@ export default class LoginForm extends Component {
             name='username'
             id='LoginForm__user_name'>
           </input>
-        </div>
-        <div className='password'>
+
           <label htmlFor='LoginForm__password'>
             Password
           </label>
@@ -69,7 +65,6 @@ export default class LoginForm extends Component {
             type='password'
             id='LoginForm__password'>
           </input>
-        </div>
         <button type='submit'>
           Login
         </button>
