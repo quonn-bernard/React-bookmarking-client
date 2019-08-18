@@ -9,6 +9,10 @@
 
 A bookmarking application that allows users to create clickable and/or downloadable bookmarks from websites, images, and documents. 
 
+## Screenshots
+
+![Landing Page](https://i.imgur.com/VhJvGe7.png)
+
 ## Tech stack
 
 The client logic is coded with ES6 and ReactJS, and styled with CSS3.
