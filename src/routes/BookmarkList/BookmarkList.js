@@ -25,6 +25,7 @@ class BookmarkList extends Component {
     }
 
     render() {
+
         const folder = <FontAwesomeIcon icon={faFolder} className="littleFolder" />
         const shadowFolder = <FontAwesomeIcon icon={faFolder} className="shadowFolder" />
         const { collectionId } = this.props.match.params
@@ -43,43 +44,40 @@ class BookmarkList extends Component {
                 name = thisCollection[0].name
             }
         }
-        console.log(name)
+        
         let bookmarksForCollection = [];
 
-        if (this.props.bookmarks.length) {
-            bookmarksForCollection = bookmarks.map(bookmark => {
-
-                if (bookmark.collection_id === parseInt(collectionId)) {
-                    count++
-                    return <li className="bookmark" key={bookmark.id}>
-                        <Bookmark
-                            icon={this.props.icon}
-                            key={bookmark.id}
-                            id={bookmark.id}
-                            name={bookmark.name}
-                            content={bookmark.content}
-                            date={bookmark.modified}
-                            type={bookmark.type}
-                            onDelete={this.handleDeleteBookmark}
-                            collection_id={bookmark.collection_id}
-                        >
-                        </Bookmark>
-                    </li>
-                }
-
-            })
-        } else {
-            bookmarksForCollection = 'no bookmarks yet...'
+        bookmarksForCollection = bookmarks.map(bookmark => {
+            // console.log(bookmark.name)
+            if (bookmark.collection_id === parseInt(collectionId)) {
+                count++
+                return <li className="bookmark" key={bookmark.id}>
+                    <Bookmark
+                        icon={this.props.icon}
+                        key={bookmark.id}
+                        id={bookmark.id}
+                        name={bookmark.name}
+                        content={bookmark.content}
+                        date={bookmark.modified}
+                        type={bookmark.type}
+                        onDelete={this.handleDeleteBookmark}
+                        collection_id={bookmark.collection_id}
+                    >
+                    </Bookmark>
+                </li>
+            }
         }
 
-
+        )
+        console.log(this.context.bookmarks)
         return (
             <div>
                 <h2>{this.props.icon}{name} ({count})</h2>
                 <h3></h3>
-                <ul className="bmList">
-                    {bookmarksForCollection}
-                </ul>
+                {(count > 0 )
+                     ?<><ul className="bmList">{bookmarksForCollection}</ul></>
+                     :<p>This Collection Is Empty...</p>
+                                }
             </div>
         )
 
