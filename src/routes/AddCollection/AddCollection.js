@@ -6,6 +6,7 @@ class AddCollection extends Component {
     render() {
         return (
           <div>
+            <h1 className="form-header">Create A Collection</h1>
             <AddCollectionForm ></AddCollectionForm>
           </div>
         )
