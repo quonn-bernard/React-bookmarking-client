@@ -19,7 +19,7 @@ export default class RegistrationPage extends Component {
     return (
       <section className='RegistrationPage'>
         {TokenService.hasAuthToken() && <Redirect to='/' />}
-        <h2>Register</h2>
+        <h2 className="form-header">Register</h2>
         <RegistrationForm
           onRegistrationSuccess={this.handleRegistrationSuccess}
         />
