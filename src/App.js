@@ -19,7 +19,7 @@ import Login from './routes/Login/Login';
 import AddBookmark from './routes/AddBookmark/AddBookmark';
 import appContext from "./appContext/appContext"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faSignOutAlt, faAtlas, faFolder, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faSignOutAlt, faAtlas, faFolder, faBookmark, faKey, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
 import RegistrationForm from './Components/RegistrationForm/RegistrationForm';
@@ -35,6 +35,7 @@ class App extends Component {
             filteredCollection: [],
             searchTerm: ''
         }
+        this.logout = this.logout.bind(this);
     }
 
     swapOpen = () => {
@@ -91,10 +92,11 @@ class App extends Component {
         this.setState({
             profile: {}
         })
+        this.props.history.push('/login');
     }
 
     componentDidMount() {
-
+        
         CollectionAPI.getCollections().then(([...collections]) => {
             this.setState({ collections: [...collections], filteredCollection: [...collections] })
         })
@@ -106,10 +108,11 @@ class App extends Component {
         if (TokenService.hasAuthToken()) {
             ProfileApiService.getProfile()
                 .then(profile => {
+                    console.log("profile")
                     return this.updateProfile(profile)
                 })
         } else {
-
+            
             return <Redirect to='/login' />
 
         }
@@ -130,6 +133,7 @@ class App extends Component {
     }
 
     render() {
+        // console.log(this.state.collections, this.state.filteredCollection.length)
         const open = (!this.state.hamburgerOpen && 'ease-open') || 'ease-close';
         const over = (!this.state.hamburgerOpen && 'ease-right') || 'ease-left'; 
         const search = <FontAwesomeIcon icon={faSearch} className="" />
@@ -141,6 +145,8 @@ class App extends Component {
         const resultFolder = <FontAwesomeIcon style={{ fontSize: "16px", color: "springgreen", marginRight: "5px" }} icon={faFolder} className="" />
         const shadowFolder = <FontAwesomeIcon style={{ marginLeft: "10px", fontSize: "26px", marginBottom: "-6px" }} icon={faFolder} className="shadowFolder fa-4x" />
         const bmFolder = <FontAwesomeIcon style={{ fontSize: "26px", margin: "15px 5px -10px 0", color: "springgreen"}} icon={faBookmark} className="shadowFolder fa-4x" />
+        const keyIcon = <FontAwesomeIcon  icon={faKey} className="btn-icon" />
+        const regIcon = <FontAwesomeIcon  icon={faUserPlus} className="btn-icon" />
         const value = {
             bookmarks: this.state.bookmarks,
             collections: this.state.collections,
@@ -168,10 +174,13 @@ class App extends Component {
                         {/* Sidebar will contain 4 buttons and a search box filter*/}
                         <aside  id="sidebar" className={open} >
                             <div>
-                                <AccountPanel icon={userIcon} profile={value.profile} ></AccountPanel>
+                            {(TokenService.hasAuthToken())
+                            ?<AccountPanel icon={userIcon} profile={value.profile} ></AccountPanel>
+                            :< Link to="/Register" > <AsideBtn icon={regIcon} name="Register"></AsideBtn> </Link>}
+                                
                                 {(TokenService.hasAuthToken())
                                     ? < Link onClick={this.logout}> <AsideBtn icon={signOutIcon} name={'Logout'}></AsideBtn> </Link>
-                                    : <AsideBtn name={'Please Login'}></AsideBtn>}
+                                    : <Link to="/login"><AsideBtn icon={keyIcon} name={'Login'}></AsideBtn></Link>}
 
                                 {< Link to="/AddCollection" > <AsideBtn icon={atlasIcon} name="Create Collection"></AsideBtn> </Link>}
                                 {< Link to="/AddBookmark" > <AsideBtn icon={bookmarkIcon} name={'Create Bookmark'}></AsideBtn> </Link>}
@@ -188,12 +197,12 @@ class App extends Component {
                                 </div>
 
                                 <div id="sidebar-filter">
-                                    {(this.state.filteredCollection.length > 0)
-                                        ? this.state.filteredCollection.map(collection => {
+                                    {(this.state.filteredCollection.length < 1)
+                                        ? <div className="sidebar-filter-result">{resultFolder}No Results</div>
+                                        : this.state.filteredCollection.map(collection => {
                                             if(parseInt(collection.author) === this.state.profile.id)
                                             return <div className="sidebar-filter-result"><Link to={"/collection/" + collection.id}>{resultFolder}{collection.name}</Link></div>
-                                        })
-                                        : null}
+                                        })}
                                 </div>
 
                             </div>
