@@ -38,7 +38,6 @@ export default class RegistrationForm extends Component {
         <div role='alert'>
           {error && <p className='red'>{error}</p>}
         </div>
-        <div className='username'>
           <label htmlFor='RegistrationForm__username'>
             User name
           </label>
@@ -48,8 +47,7 @@ export default class RegistrationForm extends Component {
             required
             id='RegistrationForm__username'>
           </input>
-        </div>
-        <div className='password'>
+  
           <label htmlFor='RegistrationForm__password'>
             Password
           </label>
@@ -59,7 +57,6 @@ export default class RegistrationForm extends Component {
             required
             id='RegistrationForm__password'>
           </input>
-        </div>
         <button type='submit'>
           Register
         </button>
