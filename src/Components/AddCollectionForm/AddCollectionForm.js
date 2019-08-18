@@ -108,8 +108,8 @@ class AddCollectionForm extends Component {
                 <ValidationError
                     hasError={!this.state.nameValid}
                     message={this.state.validationMessages.name} />
-                <h1>Create A Collection</h1>
-                <div className="form-group">
+                
+        
                     <label htmlFor="collectionName">Name *</label>
                     <input
                         type="text"
@@ -119,14 +119,13 @@ class AddCollectionForm extends Component {
                         placeholder="Enter Collection Name"
                         onChange={e => this.updateName(e.target.value)}>
                     </input>
-                </div>
+
                 <button
                     type="submit"
                     className="registration__button"
                     disabled={!this.state.formValid}>
                     Add Collection
                 </button>
-                <Link to="/"><button>Back</button></Link>
             </form>
         )
     }
