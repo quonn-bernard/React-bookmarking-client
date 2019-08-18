@@ -8,7 +8,7 @@ class AddBookmark extends Component {
         return (
 
             <div>
-                <h1>Create A Bookmark</h1>
+                <h1 className="form-header">Create A Bookmark</h1>
                 <AddBookmarkForm></AddBookmarkForm>
             </div>
 
