@@ -27,7 +27,7 @@ a {
   min-width: 320px;
   border-bottom: 1px solid white;
   box-shadow: 1px 1px 1px #999;
-  background-image: linear-gradient(to bottom right,#5e6061,grey);
+  background-image: linear-gradient(to bottom right, #5e6061, grey);
 }
 
 .nav-grid > div > ul {
@@ -97,7 +97,7 @@ a {
 }
 
 .bookmark-top {
-  background-image: linear-gradient(to bottom right,#5e6061,grey);
+  background-image: linear-gradient(to bottom right, #5e6061, grey);
   margin-bottom: 0;
   border: 1px solid black;
   padding: 0;
@@ -105,10 +105,10 @@ a {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   box-shadow: 3px 3px 3px #999;
-  transition: .4s;
+  transition: 0.4s;
 }
-.bookmark-top:hover{
-  transition: .4s;
+.bookmark-top:hover {
+  transition: 0.4s;
   background: green;
 }
 .bookmark-top > header > p {
@@ -143,15 +143,24 @@ a {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   box-shadow: 3px 3px 3px #999;
+  height: 25px;
+  display: grid;
+  grid-template-columns: 47% 6% 47%;
 }
 .bookmark-bottom > button {
-  background: #31383c;
   color: white;
   border: none;
   padding: 3px 5px;
   border-radius: 5px;
+  margin: 0 2px;
+  background-image: linear-gradient(to bottom right, #5e6061, grey);
+  transition: .3s;
+  text-align: center;
 }
-
+.bookmark-bottom > button{
+/* background: green; */
+transition: .3s;
+}
 .bookmark > div > h1 > a {
   color: white;
   text-decoration: underline;
@@ -168,16 +177,14 @@ a {
   display: grid;
   grid-template-columns: 33% 33% 33%;
 }
-.actual-bookmark > h1{
-  display: inline-block;
-  background: green;
+.actual-bookmark > h1 {
   padding: 5px 7px;
-  border-radius: 5px;
-  color: white;
+  color: green;
 }
 aside {
-  background-image: linear-gradient(to bottom right,#5e6061,grey);
+  background-image: linear-gradient(to bottom right, #5e6061, grey);
   position: absolute;
+  min-height: 100%;
 }
 .btn-icon {
   font-size: 8px;
@@ -193,7 +200,7 @@ aside {
   /* display: flex;
   flex-direction: column; */
 }
-.sidebar-filter-result > a{
+.sidebar-filter-result > a {
   color: white;
 }
 .sidebar-filter-result {
@@ -250,11 +257,29 @@ header {
   height: var(--header-height);
 }
 
+.validation-error{
+  margin-bottom: 20px;
+}
+
 /* classes */
-.green-text{
+.error{
+  color: springgreen;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.visible{
+  transition: .3s;
+  display: inline-block;
+}
+.hidden{
+  transition: .3s;
+  display: none;
+}
+.green-text {
   color: green;
 }
-.text-shadow{
+.text-shadow {
   text-shadow: 1px 1px 1px #333;
 }
 .ease-close {
@@ -275,7 +300,6 @@ header {
   -webkit-transition: 0.2s;
   transition-timing-function: ease-in;
   width: 95.25%;
-  height: 710px;
 }
 .ease-right {
   left: 209px;
@@ -283,7 +307,76 @@ header {
   -webkit-transition: 0.3s;
   transition-timing-function: ease-in;
   width: 78.75%;
-  height: 710px;
+}
+form {
+  max-width: 300px;
+  padding: 20px 15px;
+  border: 0.5px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px #999;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: linear-gradient(to bottom right, #5e6061, grey);
+}
+
+form > input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 0.5px solid #31383c;
+  height: 30px;
+  color: rgb(75, 71, 71);
+}
+
+form > select:focus,
+textarea:focus,
+input:focus {
+  outline: none;
+  border: 1.25px dashed green;
+}
+form > input {
+  width: 98%;
+  padding-left: 5px;
+}
+form > input::placeholder,
+select::placeholder,
+textarea::placeholder {
+  color: #31383c;
+  margin-left: 5px;
+}
+form > label {
+  color: white;
+  font-weight: 700;
+  /* text-shadow: .5px .5px .5px springgreen; */
+}
+form > button {
+  display: block;
+  width: 100%;
+  background: springgreen;
+  color: white;
+  text-shadow: 0.5px 0.5px 0.5px #31383c;
+  text-transform: uppercase;
+  border-radius: 5px;
+  height: 35px;
+  background-image: linear-gradient(to bottom right, #31383c33, springgreen);
+  transition: 0.4s;
+  border: 0.5px solid white;
+  font-weight: 700;
+  padding: 3px 6px 1px;
+  margin-top: 25px;
+  font-size:18px;
+}
+form > button:hover {
+  background: green;
+  transition: 0.4s;
+}
+.form-header{
+  text-align: center;
 }
 .nav-menu-grid > .nav-plus-btn > h5,
 .nav-menu-grid > .acct-btn > h5 {
